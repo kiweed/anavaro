@@ -1,0 +1,16 @@
+services:
+    anavarocom.event_medals.listener:
+        class: anavarocom\event_medals\event\main_listener
+        arguments:
+            - @auth
+            - @cache
+            - @config
+            - @dbal.conn
+            - @request
+            - @template
+            - @user
+            - @controller.helper
+            - %core.root_path%
+            - %core.php_ext%
+        tags:
+            - { name: event.listener }
