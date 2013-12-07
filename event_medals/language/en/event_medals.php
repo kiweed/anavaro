@@ -23,6 +23,7 @@ $lang = array_merge($lang, array(
 	'ACP_EVENT_MEDALS'	=>	'Event medals',
 	'ACP_EVENT_MEDALS_ADD'	=>	'Add event medals',
 	'ACP_EVENT_MEDALS_EDIT'	=>	'Edit event medals',
+	'ACP_EVENT_MEDALS_GRP'	=>	'Event medals',
 	
 	'MEDALS_TITLE'	=> 'Event medals',
 	'MEDALS_ADD_SCRIPT'	=>	'Event medals addition script',
