@@ -14,7 +14,7 @@ Event Medals
       -show summary of user medals in profile field in postview - NOT CONFIGURABLE
     
     Profile:
-      -show list user medals in profile - CONFIGURABLE
+      -show list user medals in profile - CONFIGURABLE, but NOT IMPLEMENTED
       -show form for manual adding of madels to admins - NOT IMPLEMENTED
       
     UCP:
