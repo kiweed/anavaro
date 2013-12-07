@@ -16,6 +16,7 @@ Event Medals
     Profile:
       -show list user medals in profile - CONFIGURABLE, but NOT IMPLEMENTED
       -show form for manual adding of madels to admins - NOT IMPLEMENTED
+	  -TO DO: Quick Delete/edit of medals
       
     UCP:
       -show ACL for who can view the medals in profile (Allways visible for admins and user it self) - NOT IMPLEMENTED
@@ -23,9 +24,5 @@ Event Medals
     ACP:
       -form for mass addition of medals
 	  -make sure medals are unique
-  
-  
-  TO DO:
-    form for editing of medals
-    Make manual edit form for admins
-    Do ACL configuration for admin/mod level
+	  -TO DO: edit medals
+	  -TO DO: Make ACL who can add medals
