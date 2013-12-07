@@ -81,7 +81,7 @@ class main_listener implements EventSubscriberInterface
 	protected $image_dir = 'ext/anavarocom/event_medals/images';
 	public function prepare_medals($event)
     {
-		$this->var_display($this->user->lang);
+		//$this->var_display($this->user->lang);
 		$sql = "SELECT profile_event_show FROM `phpbb_users_custom` WHERE user_id = '".$event['data']['user_id']."'";
 		$result = $this->db->sql_query($sql);
 		$optResult = $this->db->sql_fetchrow($result);
