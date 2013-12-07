@@ -22,10 +22,10 @@ Event Medals
       
     ACP:
       -form for mass addition of medals
+	  -make sure medals are unique
   
   
   TO DO:
-    Make sure there is no duplicating medals
     form for editing of medals
     Make manual edit form for admins
     Do ACL configuration for admin/mod level
