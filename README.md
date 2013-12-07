@@ -24,7 +24,7 @@ Event Medals
       -form for mass addition of medals
       
   TO DO:
-	-Make sure there is no duplicating medals
-	-form for editing of medals
-	-Make manual edit form for admins
-	-Do ACL configuration for admin/mod level
+    Make sure there is no duplicating medals
+    form for editing of medals
+    Make manual edit form for admins
+    Do ACL configuration for admin/mod level
