@@ -123,7 +123,7 @@ class main_module
 						$month = $request->variable('month', '');
 						$year = $request->variable('year', '');
 						$link = $request->variable('link', '');
-						$image = utf8_normalize_nfc($request->variable('image', ''));
+						$image = utf8_normalize_nfc($request->variable('image', 'none'));
 						
 						$error_array = array();
 						
@@ -138,23 +138,27 @@ class main_module
 						}
 						else { $error_array[] = '{L_ERR_DATE_ERR}'; }
 						if ($link AND !is_numeric($link)) { $error_array[] = '{L_ERR_TOPIC_ERR}'; }
+						$error_array_sub = 0;
 						if (!$error_array) {
 							$timestamp = mktime("0", "0", "0", $month, $day, $year);
 							
-							foreach ($medals_array AS $ID => $VAR) { 
+							foreach ($medals_array AS $ID => $VAR) {
+								
 								//$this->var_display($VAR);
-								$sql = "INSERT INTO `phpbb_event_medals` SET `oid` = '".$ID."', `type` = '".$VAR['select']."', `date` = '".$timestamp."'";
-								if ($link) { $sql .= ", `link` = '".$link."'"; }
-								if ($image) { $sql .= ", `image` = '".$image."'"; }
-								//$this->var_display($sql);
-								$db->sql_query($sql);
+								$sql_rq = "SELECT  `oid`, `link`, COUNT(*) FROM  `phpbb_event_medals` WHERE `oid` = '".$ID."' AND `link` = '".$link."'";
+								$result = $db->sql_fetchrow($db->sql_query($sql_rq));
+								//$this->var_display($result['COUNT(*)']);
+								if ($result['COUNT(*)'] < 1) {
+									$sql = "INSERT INTO `phpbb_event_medals` SET `oid` = '".$ID."', `type` = '".$VAR['select']."', `date` = '".$timestamp."'";
+									if ($link) { $sql .= ", `link` = '".$link."'"; }
+									if ($image) { $sql .= ", `image` = '".$image."'"; }
+									//$this->var_display($sql);
+									$db->sql_query($sql);
+								}
+								else {	$error_array_sub ++; }
 							}
 							$post_url = append_sid("index.php?i=".$id."&mode=".$mode);
-							
-							
-							
-						} 
-						
+						}
 						else {
 							//$this->var_display($error_array);
 							$template->assign_vars(array(
