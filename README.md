@@ -4,7 +4,9 @@ Event Medals
 
   Description:
   
-    Event Medals is a extension for PhpBB3 that adds support for event awards. It is developed as a way to give awards in user profiles for attending live meetings. But can be used for much more.
+    Event Medals is a extension for PhpBB3 that adds support for event awards. 
+	It is developed as a way to give awards in user profiles for attending live meetings. 
+	But can be used for much more.
     
   Features:
     
@@ -22,7 +24,7 @@ Event Medals
       -form for mass addition of medals
       
   TO DO:
-    - Make sure there is no duplicating medals
-    - form for editing of medals
-    - Make manual edit form for admins
-    - Do ACL configuration for admin/mod level
+    -Make sure there is no duplicating medals
+    -form for editing of medals
+    -Make manual edit form for admins
+    -Do ACL configuration for admin/mod level
