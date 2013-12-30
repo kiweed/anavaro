@@ -82,14 +82,13 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 			'add_tables'    => array(
 				$this->table_prefix . 'event_medals'		=> array(
 					'COLUMNS'		=> array(
-						'id'		=> array('UINT:11', NULL, 'auto_increment'),
-						'oid'		=> array('VCHAR:32', ''),
+						'oid'		=> array('UINT:8'),
 						'type'		=> array('UINT:2', 1),
 						'link'		=> array('UINT:8'),
 						'date'		=> array('VCHAR:16', NULL),
 						'image'		=> array('VCHAR:128', 'none')
 					),
-					'PRIMARY_KEY'    => 'id',
+					'PRIMARY_KEY'    => 'oid, link',
 				)
 			),
 		);

@@ -21,6 +21,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'ACP_EVENT_MEDALS'	=>	'Медали',
+	'ACP_EVENT_MEDALS_GRP'	=>	'Медали',
 	'ACP_EVENT_MEDALS_ADD'	=>	'Добави медали',
 	'ACP_EVENT_MEDALS_EDIT'	=>	'Промени медали',
 	
@@ -32,9 +33,10 @@ $lang = array_merge($lang, array(
 	'MEDALS_ADD_STEP_TWO'	=>	'СТЪПКА 2: Тип на медалите.',
 	'WARNING'	=>	'ВНИМАНИЕ!',
 	'INFO'	=>	'Информация',
-	'SUCCESS_INFO'	=>	'Медалите са добавени успешно',
+	'SUCCESS_ADD_INFO'	=>	'Медалите са добавени успешно',
 	'BACK'	=> '« Обратно към предишната страница',
 	'USER'	=>	'Потребител',
+	'EVENT'	=>	'Събитие',
 	'NOT_EXISTENTS'	=>	'не съществува',
 	'CORRECT_WARNING_ONE'	=>	'ИЗПОЛЗВАЙТЕ BACK бутона за да се върнете и коригирате или добавете медалите на тези потребители по-късно.',
 	'CORRECT_WARNING_THREE'	=>	'ИЗПОЛЗВАЙТЕ BACK бутона за да се върнете и коригирате!',
@@ -44,6 +46,19 @@ $lang = array_merge($lang, array(
 	'MEDAL_TYPE_THREE'	=> 'Избягал',
 	'MEDAL_TYPE_FOUR'	=> 'НЕ ЖЕЛАН!',
 	'MEDALS_ADD_STEP_THREE'	=> 'СТЪПКА 3: Дати и картинки.',
+	
+	'MEDALS_EDIT_SCRIPT'	=>	'Скрипт за промяна на медалите!',
+	'MEDALS_EDIT_STEP_ONE'	=>	'СТЪПКА 1: Изберете потребител или среща за които ще променяте медали!',
+	'MEDALS_USER_SELECT'	=>	'Изберете потребител',
+	'MEDALS_EVENT_SELECT'	=>	'Изберете събитие',
+	'MEDALS_SELECT_TYPE'	=>	'Кое ще променяме?',
+	'MEDALS_SELECT_TYPE_EXPLENATION'	=>	'Изберете дали ще променяте медалите за потребител или събитие.',
+	'MEDALS_EDIT_STEP_TWO_EVENT'	=>	'СТЪПКА 2: Изберете промените за това събитие.',
+	'MEDALS_EDIT_STEP_TWO_USER'	=>	'СТЪПКА 2: Изберете промените за този потребител.',
+	'MEDAL_DELETE'	=>	'Премахни медала',
+	'SUCCESS_EDIT_INFO'	=>	'Медалите са променени успешно',
+	
+	
 	
 	'DATE'	=> 'Дата:',
 	'M_JAN'	=>	'Януари',

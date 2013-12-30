@@ -33,9 +33,10 @@ $lang = array_merge($lang, array(
 	'MEDALS_ADD_STEP_TWO'	=>	'STEP 2: Event medals type.',
 	'WARNING'	=>	'Warning!',
 	'INFO'	=>	'Information',
-	'SUCCESS_INFO'	=>	'Event medals are added successfully',
+	'SUCCESS_ADD_INFO'	=>	'Event medals are added successfully',
 	'BACK'	=> '« Back to previous page',
 	'USER'	=>	'User',
+	'EVENT'	=>	'Event',
 	'NOT_EXISTENTS'	=>	'does not exist',
 	'CORRECT_WARNING_ONE'	=>	'USE BACK button to go back and change username or add user manualy.',
 	'CORRECT_WARNING_THREE'	=>	'USE BACK button to go back and correct.',
@@ -45,6 +46,19 @@ $lang = array_merge($lang, array(
 	'MEDAL_TYPE_THREE'	=> 'Ran away',
 	'MEDAL_TYPE_FOUR'	=> 'NOT WELCOMED!',
 	'MEDALS_ADD_STEP_THREE'	=> 'STEP 3: Dates and custom images.',
+
+	'MEDALS_EDIT_SCRIPT'	=>	'Script to edit events!',
+	'MEDALS_EDIT_STEP_ONE'	=>	'Step 1: Choose user or event you want to edit!',
+	'MEDALS_USER_SELECT'	=>	'Choose user',
+	'MEDALS_EVENT_SELECT'	=>	'Choose event',
+	'MEDALS_SELECT_TYPE'	=>	'What will you change?',
+	'MEDALS_SELECT_TYPE_EXPLENATION'	=>	'Choose ehat kind of change you are doing - event or user.',
+	'MEDALS_EDIT_STEP_TWO_EVENT'	=>	'Step 2: Choose change for this event.',
+	'MEDALS_EDIT_STEP_TWO_USER'	=>	'Step 2: Choose changes for user.',
+	'MEDAL_DELETE'	=>	'Remove event medal',
+	'SUCCESS_EDIT_INFO'	=>	'Event medals changed successfully!',
+
+
 	
 	'DATE'	=> 'Date:',
 	'M_JAN'	=>	'January',

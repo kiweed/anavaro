@@ -24,5 +24,5 @@ Event Medals
     ACP:
       -form for mass addition of medals
 	  -make sure medals are unique
-	  -TO DO: edit medals
+	  -edit medals
 	  -TO DO: Make ACL who can add medals

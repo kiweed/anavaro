@@ -32,12 +32,11 @@ class main_module
 		
 		global $db, $user, $auth, $template, $cache, $request;
         global $config, $SID, $phpbb_root_path, $phpbb_admin_path, $phpEx, $k_config, $table_prefix;
-		$action = $request->variable('act', 'add');
 		//$this->var_display($action);
 
 		//$this->var_display($tid);
 		//Lets get some groups!
-		switch ($action) {
+		switch ($mode) {
 			case 'add':
 				$user->add_lang_ext('anavarocom/event_medals', 'event_medals');
 				$this->tpl_name		= 'acp_event_medals_add';
@@ -174,6 +173,187 @@ class main_module
 						
 						$template->assign_vars(array(
 							'S_STAGE' => 'fourth',
+							'U_ACTION'	=>	$post_url,
+						));
+					break;
+				}
+			break;
+			case 'edit':
+				$user->add_lang_ext('anavarocom/event_medals', 'event_medals');
+				$this->tpl_name		= 'acp_event_medals_edit';
+				$this->page_title	= 'ACP_EVENT_MEDALS_EDIT';
+				
+				$stage = $request->variable('stage', 'first');
+				
+				switch ($stage) {
+					case 'first':
+						$sql = "SELECT DISTINCT(`e`.`link`) as `id`, `t`.`topic_title` as `title` 
+								FROM `phpbb_event_medals` as `e`
+								JOIN ".TOPICS_TABLE." as `t` ON (`e`.`link` = `t`.`topic_id`)
+								ORDER BY `id` DESC";
+						$result = $db->sql_query($sql);
+						while ($row = $db->sql_fetchrow($result))
+						{
+							$template->assign_block_vars('event', array(
+								'ID'	=>	$row['id'],
+								'EVENT'	=>	$row['title'],
+							));
+							//$this->var_display($row);
+							
+						}
+						
+						$post_url = append_sid("index.php?i=".$id."&mode=".$mode."&stage=second");
+						$template->assign_vars(array(
+							'S_STAGE' => 'first',
+							'U_ACTION'	=>	$post_url,
+						));
+					break;
+					case 'second':
+						$edit_type = $request->variable('event_edit_type', 'event');
+						if ($edit_type == 'event')
+						{
+							$event_id = $request->variable('topic', '');
+							$sql = "SELECT `e`.`oid`, `e`.`type`, `u`.`username` 
+									FROM `phpbb_event_medals` as `e`
+									JOIN ". USERS_TABLE ." as `u` ON `e`.`oid` = `u`.`user_id`
+									WHERE `e`.`link` = '".$event_id."'";
+							$result = $db->sql_query($sql);
+							
+							while ($row = $db->sql_fetchrow($result)) 
+							{
+								$template->assign_block_vars('event_edit', array(
+									'USERNAME'	=>	$row['username'],
+									'USER_ID'	=>	$row['oid'],
+									'TYPE'	=>	$row['type']
+								));
+							}
+							$post_url = append_sid("index.php?i=".$id."&mode=".$mode."&stage=third_event");
+							$template->assign_vars(array(
+								'S_STAGE' => 'second',
+								'U_ACTION'	=>	$post_url,
+								'S_EVENT_ID'	=>	$event_id,
+							));
+						}
+						else
+						{
+							$username_request = utf8_normalize_nfc($request->variable('username', ''));
+							$sql = 'SELECT user_id, username 
+									FROM ' . USERS_TABLE . '
+									WHERE `username_clean` = \''.utf8_clean_string($username_request).'\'';
+							$result = $db->sql_query($sql);
+							$username;
+							$user_id;
+							while ($row = $db->sql_fetchrow($result))
+							{
+								$username = $row['username'];
+								$user_id = $row['user_id'];
+							}
+							$sql = 'SELECT `e`.`type` as `type`, `e`.`link` as `link`, `t`.`topic_title` as `title` FROM `phpbb_event_medals` as `e` JOIN '.TOPICS_TABLE.' as `t` ON (`e`.`link` = `t`.`topic_id`) WHERE `oid` = \''.$user_id.'\';';
+							$result = $db->sql_query($sql);
+							while ($row = $db->sql_fetchrow($result))
+							{
+								$events[$row['link']] = array(
+									'type'	=>	$row['type'],
+									'title'	=>	$row['title'],
+								);
+							}
+							$post_url = append_sid("index.php?i=".$id."&mode=".$mode."&stage=third_user");
+							$template->assign_vars(array(
+								'S_STAGE' => 'second_user',
+								'U_ACTION'	=>	$post_url,
+								'S_USERNAME'	=>	$username,
+								'S_USER_ID'	=>	$user_id,
+							));
+							foreach ($events as $ID => $VAR)
+							{
+								$template->assign_block_vars('user_edit', array(
+									'EVENT_ID'	=>	$ID,
+									'TYPE'	=>	$VAR['type'],
+									'TITLE'	=>	$VAR['title'],
+								));
+							}
+							
+							//$this->var_display($events);
+						}
+					break;
+					case 'third_event':
+						$event_id = $request->variable('target_event', '');
+						$delete = $request->variable('delete', array(''=>''));
+						//first we delete, then we update
+						foreach ($delete as $VAR)
+						{
+							$sql = "DELETE FROM `phpbb_event_medals` WHERE `oid` = '".$VAR."' AND `link` = '".$event_id."' LIMIT 1";
+							$db->sql_query($sql);
+						}
+						$users = $request->variable ('usesr', array('' => array(''=>'',''=>'')));
+						
+						foreach ($users as $ID=>$VAR)
+						{
+							$users_new[$ID] = $VAR['select'];
+						}
+						$sql = "SELECT `oid`, `type` FROM `phpbb_event_medals` WHERE `link` = '".$event_id."'";
+						$result = $db->sql_query($sql);
+						
+						while ($row = $db->sql_fetchrow($result))
+						{
+							$users_old[$row['oid']] = $row['type'];
+						}
+						$users_diff = array_diff($users_new, $users_old);
+						
+						foreach ($delete as $VAR)
+						{
+							unset($users_diff[$VAR]);
+						}
+						if ($users_diff) 
+						{
+							foreach ($users_diff as $ID => $VAR)
+							{
+								$sql = "UPDATE `phpbb_event_medals` SET `type` = '".$VAR."' WHERE `oid` = '".$ID."' AND `link` = '".$event_id."' LIMIT 1";
+								$db->sql_query($sql);
+							}
+						}
+						$post_url = append_sid("index.php?i=".$id."&mode=".$mode);
+						$template->assign_vars(array(
+							'S_STAGE' => 'third',
+							'U_ACTION'	=>	$post_url,
+						));
+					break;
+					case 'third_user':
+						$user_id = $request->variable('target_user', '');
+						$delete = $request->variable('delete', array(''=>''));
+						foreach ($delete as $VAR)
+						{
+							$sql = "DELETE FROM `phpbb_event_medals` WHERE `oid` = '".$user_id."' AND `link` = '".$VAR."' LIMIT 1";
+							$db->sql_query($sql);
+						}
+						$eventsrq = $request->variable ('events', array('' => array(''=>'',''=>'')));
+						foreach ($eventsrq as $ID => $VAR)
+						{
+							$events_new[$ID] = $VAR['select'];
+						}
+						
+						$sql = 'SELECT `link`, `type` FROM `phpbb_event_medals` WHERE `oid` = \''.$user_id.'\'';
+						$result = $db->sql_query($sql);
+						while ($row = $db->sql_fetchrow($result))
+						{
+							$events_old[$row['link']] = $row['type'];
+						}
+						$events_diff = array_diff($events_new, $events_old);
+						foreach ($delete as $VAR)
+						{
+							unset($events_diff[$VAR]);
+						}
+						if ($events_diff)
+						{
+							foreach ($events_diff as $ID => $VAR)
+							{
+								$sql = "UPDATE `phpbb_event_medals` SET `type` = '".$VAR."' WHERE `oid` = '".$user_id."' AND `link` = '".$ID."' LIMIT 1";
+								$db->sql_query($sql);
+							}
+						}
+						$post_url = append_sid("index.php?i=".$id."&mode=".$mode);
+						$template->assign_vars(array(
+							'S_STAGE' => 'third',
 							'U_ACTION'	=>	$post_url,
 						));
 					break;
