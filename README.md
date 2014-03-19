@@ -26,3 +26,29 @@ Event Medals
 	  -make sure medals are unique
 	  -edit medals
 	  -TO DO: Make ACL who can add medals
+
+	  
+Zebra enchance
+
+  Description:
+  
+    Enhances PhpBB Zebra module adding additional ACL level.
+	Adds support for friend request need to be approved.
+	Adds addition level of friends - hidden mark for special friends.
+	Adds beautiful friend control.
+	
+  Features:
+  
+    System:
+	  - TO DO: Make sure AJAX Callback function is loaded only in UCP -> Zebra
+	
+	UCP:
+	  - Show pending and awaiting confirmation requests
+	  - Show beautiful friend control (using AJAX)
+	  - Add option for selecting "Close Friends" with additional access*
+	  - TO DO: Dynamically locate which is the zebra modile
+	  - TO DO: Make cancel request use AJAXed "confirm_box" (there is bug with confirm submit when executed from ajax)
+	  - TO DO: See if when user is deleted zebra cleans the remains (if not - make the extension do it)
+	  
+	ACP:
+	  - TO DO: Add ACL options
