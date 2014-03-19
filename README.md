@@ -41,6 +41,7 @@ Zebra enchance
   
     System:
 	  - TO DO: Make sure AJAX Callback function is loaded only in UCP -> Zebra
+	  - TO DO: Add notifications for new requests.
 	
 	UCP:
 	  - Show pending and awaiting confirmation requests
