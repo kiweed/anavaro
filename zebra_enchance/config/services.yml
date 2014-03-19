@@ -1,0 +1,29 @@
+services:
+    anavarocom.zebra_enchance.listener:
+        class: anavarocom\zebra_enchance\event\zebra_listener
+        arguments:
+            - @auth
+            - @cache
+            - @config
+            - @dbal.conn
+            - @request
+            - @template
+            - @user
+            - @controller.helper
+            - %core.root_path%
+            - %core.php_ext%
+        tags:
+            - { name: event.listener }
+    anavarocom.zebra_enchance.ajaxyfy:
+        class: anavarocom\zebra_enchance\controller\ajaxify
+        arguments:
+            - @auth
+            - @cache
+            - @config
+            - @dbal.conn
+            - @request
+            - @template
+            - @user
+            - @controller.helper
+            - %core.root_path%
+            - %core.php_ext%
