@@ -7,7 +7,7 @@
 *
 */
 
-namespace anavarocom\event_medals\migrations\v10x;
+namespace anavarocom\eventmedals\migrations\v10x;
 
 class release_1_0_0 extends \phpbb\db\migration\migration
 {
@@ -38,7 +38,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 				'acp',
 				'ACP_EVENT_MEDALS_GRP',
 				array(
-					'module_basename'	=> '\anavarocom\event_medals\acp\main_module'	,
+					'module_basename'	=> '\anavarocom\eventmedals\acp\main_module'	,
 					'mode'		=> array('add'),
 				)
 			)),
@@ -53,7 +53,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 				'acp',
 				'ACP_EVENT_MEDALS_GRP',
 				array(
-					'module_basename'	=> '\anavarocom\event_medals\acp\main_module'	,
+					'module_basename'	=> '\anavarocom\eventmedals\acp\main_module'	,
 					'mode'		=> array('add'),
 				)
 			)),

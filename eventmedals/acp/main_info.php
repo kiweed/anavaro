@@ -12,7 +12,7 @@
 * @ignore
 */
 
-namespace anavarocom\event_medals\acp;
+namespace anavarocom\eventmedals\acp;
 
 if (!defined('IN_PHPBB'))
 {
@@ -26,7 +26,7 @@ class main_info
 	function module()
 	{
 		return array(
-			'filename'	=> '\anavarocom\event_medals\acp\main_module',
+			'filename'	=> '\anavarocom\eventmedals\acp\main_module',
 			'title'		=> 'Медали от събития',
 			'version'	=> '0.0.9',
 			'modes'		=> array(

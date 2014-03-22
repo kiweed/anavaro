@@ -11,7 +11,7 @@
 /**
 * @ignore
 */
-namespace anavarocom\event_medals\acp;
+namespace anavarocom\eventmedals\acp;
 
 if (!defined('IN_PHPBB'))
 {
@@ -38,7 +38,7 @@ class main_module
 		//Lets get some groups!
 		switch ($mode) {
 			case 'add':
-				$user->add_lang_ext('anavarocom/event_medals', 'event_medals');
+				$user->add_lang_ext('anavarocom/eventmedals', 'event_medals');
 				$this->tpl_name		= 'acp_event_medals_add';
 				$this->page_title	= 'ACP_EVENT_MEDALS_ADD';
 				
@@ -179,7 +179,7 @@ class main_module
 				}
 			break;
 			case 'edit':
-				$user->add_lang_ext('anavarocom/event_medals', 'event_medals');
+				$user->add_lang_ext('anavarocom/eventmedals', 'event_medals');
 				$this->tpl_name		= 'acp_event_medals_edit';
 				$this->page_title	= 'ACP_EVENT_MEDALS_EDIT';
 				

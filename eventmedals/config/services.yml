@@ -1,6 +1,6 @@
 services:
-    anavarocom.event_medals.listener:
-        class: anavarocom\event_medals\event\main_listener
+    anavarocom.eventmedals.listener:
+        class: anavarocom\eventmedals\event\main_listener
         arguments:
             - @auth
             - @cache
