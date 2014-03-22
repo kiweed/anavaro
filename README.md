@@ -28,7 +28,7 @@ Event Medals
 	  -TO DO: Make ACL who can add medals
 
 	  
-Zebra enchance
+Zebra enhance
 
   Description:
   
@@ -47,7 +47,7 @@ Zebra enchance
 	  - Show pending and awaiting confirmation requests
 	  - Show beautiful friend control (using AJAX)
 	  - Add option for selecting "Close Friends" with additional access*
-	  - TO DO: Dynamically locate which is the zebra modile
+	  - TO DO: Dynamically locate which is the zebra module
 	  - TO DO: Make cancel request use AJAXed "confirm_box" (there is bug with confirm submit when executed from ajax)
 	  - TO DO: See if when user is deleted zebra cleans the remains (if not - make the extension do it)
 	  

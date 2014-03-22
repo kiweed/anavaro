@@ -7,13 +7,13 @@
 *
 */
 
-namespace anavarocom\zebra_enchance\migrations\v10x;
+namespace anavarocom\zebraenhance\migrations\v10x;
 
 class release_1_0_0 extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
         {
-                return isset($this->config['zebra_enchance_version']) && version_compare($this->config['zebra_enchance_version'], '1.0.0', '>=');
+                return isset($this->config['zebra_enhance_version']) && version_compare($this->config['zebra_enhance_version'], '1.0.0', '>=');
         }
 	static public function depends_on()
         {
@@ -24,14 +24,14 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 	{
 		return array(
 			
-			array('config.add', array('zebra_enchance_version', '1.0.0')),
+			array('config.add', array('zebra_enhance_version', '1.0.0')),
 		);
 	}
 	public function revert_data()
 	{
 		return array(
 		
-			array('config.remove', array('zebra_enchance_version')),
+			array('config.remove', array('zebra_enhance_version')),
 		);
 	}
 	//lets create the needed table	

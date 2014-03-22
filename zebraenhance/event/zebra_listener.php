@@ -11,7 +11,7 @@
 //TODO 2: Make use of ajax requests for canceling requests
 //TODO 3: check if Zebra table is cleaned from deletion of user (make it clean if it is not.
 
-namespace anavarocom\zebra_enchance\event;
+namespace anavarocom\zebraenhance\event;
 
 /**
 * @ignore
@@ -79,14 +79,14 @@ class zebra_listener implements EventSubscriberInterface
 	public function load_language_on_setup($event){
 		$lang_set_ext = $event['lang_set_ext'];
 		$lang_set_ext[] = array(
-            'ext_name' => 'anavarocom/zebra_enchance',
+            'ext_name' => 'anavarocom/zebraenhance',
             'lang_set' => 'zebra_enchance',
         );
         $event['lang_set_ext'] = $lang_set_ext;
 	}
 
 
-	protected $image_dir = 'ext/anavarocom/zebra_enchance/images';
+	protected $image_dir = 'ext/anavarocom/zebraenhance/images';
 	
 	public function zebra_confirm_add($event)
 	{
@@ -185,8 +185,8 @@ class zebra_listener implements EventSubscriberInterface
 					'USERNAME'	=> '<a class="username-coloured" style="color: '.$row['user_colour'].'" href="'.append_sid('memberlist.php?mode=viewprofile&u='.$row['user_id']).'">'.$row['username'].'</a>',
 					'CONFIRM' => '<a href="./ucp.php?i=zebra&add='.$row['username'].'"><img src="' . $this->image_dir . '/confirm_16.png"/></a>',
 					//TODO 2
-					//'CANCEL'	=> '<a href="'.$this->root_path.'app.php/zebraenchance/cancel_fr/'.$row['user_id'].'" data-ajax="true" data-refresh="true"><img src="' . $this->image_dir . '/cancel.gif"/></a>',
-					'CANCEL'	=> '<a href="'.$this->root_path.'app.php/zebraenchance/cancel_fr/'.$row['user_id'].'"><img src="' . $this->image_dir . '/cancel.gif"/></a>',
+					//'CANCEL'	=> '<a href="'.$this->root_path.'app.php/zebraenhance/cancel_fr/'.$row['user_id'].'" data-ajax="true" data-refresh="true"><img src="' . $this->image_dir . '/cancel.gif"/></a>',
+					'CANCEL'	=> '<a href="'.$this->root_path.'app.php/zebraenhance/cancel_fr/'.$row['user_id'].'"><img src="' . $this->image_dir . '/cancel.gif"/></a>',
 				));
 			}
 			if($ispending)
@@ -207,8 +207,8 @@ class zebra_listener implements EventSubscriberInterface
 				$this->template->assign_block_vars('pending_awaits', array(
 					'USERNAME'	=> '<a class="username-coloured" style="color: '.$row['user_colour'].'" href="'.append_sid('memberlist.php?mode=viewprofile&u='.$row['zebra_id']).'">'.$row['username'].'</a>',
 					//TODO 2
-					//'CANCEL'	=> '<a href="'.$this->root_path.'app.php/zebraenchance/cancel_fr/'.$row['zebra_id'].'" data-ajax="true"><img src="' . $this->image_dir . '/cancel.gif"/></a>',
-					'CANCEL'	=> '<a href="'.$this->root_path.'app.php/zebraenchance/cancel_fr/'.$row['zebra_id'].'"><img src="' . $this->image_dir . '/cancel.gif"/></a>',
+					//'CANCEL'	=> '<a href="'.$this->root_path.'app.php/zebraenhance/cancel_fr/'.$row['zebra_id'].'" data-ajax="true"><img src="' . $this->image_dir . '/cancel.gif"/></a>',
+					'CANCEL'	=> '<a href="'.$this->root_path.'app.php/zebraenhance/cancel_fr/'.$row['zebra_id'].'"><img src="' . $this->image_dir . '/cancel.gif"/></a>',
 				));
 			}
 			if($iswaiting)
@@ -228,7 +228,7 @@ class zebra_listener implements EventSubscriberInterface
 				$this->template->assign_block_vars('prity_zebra', array(
 					'USERNAME'	=>	'<a class="username-coloured" style="color: '.$row['user_colour'].'" href="'.append_sid('memberlist.php?mode=viewprofile&u='.$row['zebra_id']).'">'.$row['username'].'</a>',
 					'CANCEL' => '<a href="./ucp.php?i=zebra&remove=1&usernames[]='.$row['zebra_id'].'"><img src="' . $this->image_dir . '/cancel.gif"/></a>',
-					'BFF' =>	$row['bff'] ? '<a href="./app.php/zebraenchance/togle_bff/'.$row['zebra_id'].'" data-ajax="togle_bff"><img id="usr_'.$row['zebra_id'].'" src="'. $this->image_dir . '/favorite_remove.png" width="16px" height="16px"/></a>' : '<a href="./app.php/zebraenchance/togle_bff/'.$row['zebra_id'].'" data-ajax="togle_bff"><img id="usr_'.$row['zebra_id'].'" src="'. $this->image_dir . '/favorite_add.png" width="16px" height="16px"/></a>'
+					'BFF' =>	$row['bff'] ? '<a href="./app.php/zebraenhance/togle_bff/'.$row['zebra_id'].'" data-ajax="togle_bff"><img id="usr_'.$row['zebra_id'].'" src="'. $this->image_dir . '/favorite_remove.png" width="16px" height="16px"/></a>' : '<a href="./app.php/zebraenhance/togle_bff/'.$row['zebra_id'].'" data-ajax="togle_bff"><img id="usr_'.$row['zebra_id'].'" src="'. $this->image_dir . '/favorite_add.png" width="16px" height="16px"/></a>'
 				));
 			}
 			$this->template->assign_var('IMGDIR', $this->image_dir);

@@ -7,7 +7,7 @@
 *
 */
 
-namespace anavarocom\zebra_enchance\controller;
+namespace anavarocom\zebraenhance\controller;
 
 /**
 * @ignore
@@ -57,7 +57,7 @@ class ajaxify
 	
 		//load language file
 		
-		$this->user->add_lang_ext('anavarocom/zebra_enchance', 'zebra_enchance');
+		$this->user->add_lang_ext('anavarocom/zebraenhance', 'zebra_enchance');
 		$confirm = $this->request->variable('confirm', '');
 		$u_action = $this->root_path . 'ucp.php?i=168';
 		switch ($action)
