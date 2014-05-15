@@ -17,7 +17,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
         }
 	static public function depends_on()
         {
-                return array('\phpbb\db\migration\data\v310\dev');
+                return array('\phpbb\db\migration\data\v310\beta2');
         }
 		
 	public function update_data()
@@ -39,14 +39,18 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 				'ACP_EVENT_MEDALS_GRP',
 				array(
 					'module_basename'	=> '\anavarocom\eventmedals\acp\main_module'	,
-					'mode'		=> array('add'),
+					'modes'		=> array('add'),
 				)
 			)),
-			
+			array('module.add', array(
+				'ucp',
+				'',
+				'ACP_EVENT_MEDALS_GRP'
+			)),
 			array('config.add', array('event_medals_version', '1.0.0')),
 		);
 	}
-	public function revert_data()
+/*	public function revert_data()
 	{
 		return array(
 			array('module.remove', array(
@@ -54,7 +58,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 				'ACP_EVENT_MEDALS_GRP',
 				array(
 					'module_basename'	=> '\anavarocom\eventmedals\acp\main_module'	,
-					'mode'		=> array('add'),
+					'module_mode'		=> array('add'),
 				)
 			)),
 			array('module.remove', array(
@@ -69,7 +73,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 			)),
 			array('config.remove', array('event_medals_version')),
 		);
-	}
+	}*/
 	//lets create the needed table	
 	public function update_schema()
 	{
