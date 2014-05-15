@@ -4,7 +4,7 @@
 // however you can override the default methods and add custom
 // installation logic
 
-namespace anavarocom\event_medals;
+namespace anavarocom\eventmedals;
 
 class ext extends \phpbb\extension\base
 {
