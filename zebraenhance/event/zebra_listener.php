@@ -168,6 +168,7 @@ class zebra_listener implements EventSubscriberInterface
 	
 	public function module_display($event)
 	{
+		$ispending = $iswaiting = '';
 		//TODO 1
 		if ($event['id'] == 'ucp_zebra' OR $event['id'] == '168')
 		{
