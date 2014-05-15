@@ -28,7 +28,9 @@ Event Medals
 	  -edit medals
 	  -TO DO: Make ACL who can add medals
 	  -TO DO: Edit image of medals
-
+  Global TO DO:
+    Optimize and Clean code. 
+    Make SQL use $db object
 	  
 Zebra enhance
 
@@ -55,3 +57,8 @@ Zebra enhance
 	  
 	ACP:
 	  - TO DO: Add ACL options
+
+  Global TO DO:
+    Optimize and Clean code.
+    Make SQL use $db object
+
