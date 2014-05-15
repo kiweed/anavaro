@@ -85,7 +85,7 @@ class main_listener implements EventSubscriberInterface
 		$sql = "SELECT profile_event_show FROM `phpbb_users_custom` WHERE user_id = '".$event['data']['user_id']."'";
 		$result = $this->db->sql_query($sql);
 		$optResult = $this->db->sql_fetchrow($result);
-		$sql = "SELECT `zebra_id`, `user_id`, `bff` FROM `phpbb_zebra` WHERE `user_id` = '".$event['data']['user_id']."' AND `zebra_id` = '".$phpbb_user->data['user_id']."'";
+		$sql = "SELECT `zebra_id`, `user_id`, `bff` FROM `phpbb_zebra` WHERE `user_id` = '".$event['data']['user_id']."' AND `zebra_id` = '".$this->user->data['user_id']."'";
 		$result = $this->db->sql_fetchrow($this->db->sql_query($sql));
 		$friend_state;
 		if ($result) {
@@ -99,18 +99,18 @@ class main_listener implements EventSubscriberInterface
 		else {
 			$friend_state = 1;
 		}
-		if ($user_id == $phpbb_user->data['user_id'] || $phpbb_auth->acl_getf_global('m_approve') || $$phpbb_auth->acl_get('a_user') || ($optResult['profile_event_show'] > 0 AND $optResult['profile_event_show'] <= $friend_state)) {
+		if ($event['data']['user_id'] == $this->user->data['user_id'] || $this->auth->acl_getf_global('m_approve') || $this->auth->acl_get('a_user') || ($optResult['profile_event_show'] > 0 AND $optResult['profile_event_show'] <= $friend_state)) {
 			$sql="SELECT * FROM `phpbb_event_medals` WHERE `oid` = '".$event['data']['user_id']."' ORDER BY `date`";
 			$result=$this->db->sql_query($sql);
 			while ($row = $this->db->sql_fetchrow($result)) {
 				$medals[] = array (
-					'id'	=>	$row['id'],
 					'type'	=>	$row['type'],
 					'link'	=>	$row['link'],
 					'date'	=>	$row['date'],
 					'image' =>	$row['image'],
 				);
 			}
+
 			if ($medals) {
 				if (count($medals) == "1") {
 					$outputMedals = "<a href=\"{$this->root_path}viewtopic.{$this->php_ext}?t=".$medals[0]['link']."\">";
@@ -135,6 +135,7 @@ class main_listener implements EventSubscriberInterface
 					$outputMedals .= "</a> ";
 				}
 				else {
+					$outputMedals = '';
 					$count = "1";
 					foreach($medals AS $VAR) {
 						$outputMedals .= "<a href=\"{$this->root_path}viewtopic.{$this->php_ext}?t=".$medals[0]['link']."\">";
@@ -158,7 +159,7 @@ class main_listener implements EventSubscriberInterface
 							}	
 						}
 						else {
-							$outputMedals .= "<img src=\"" . $phpbb_root_path . "/" . $VAR['image'] ."\" alt=\"" . $date . "\" title=\"" . $date . "\"/>";
+							$outputMedals .= "<img src=\"" . $this->root_path . $VAR['image'] ."\" alt=\"" . $date . "\" title=\"" . $date . "\"/>";
 						}
 						$count++;
 						$outputMedals .= "</a>";
