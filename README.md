@@ -26,6 +26,7 @@ Event Medals
 	  -make sure medals are unique
 	  -edit medals
 	  -TO DO: Make ACL who can add medals
+	  -TO DO: Edit image of medals
 
 	  
 Zebra enhance
