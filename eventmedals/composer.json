@@ -1,11 +1,11 @@
 {
-	"name": "anavarocom/event_medals",
+	"name": "anavarocom/eventmedals",
 	"type": "phpbb-extension",
 	"description": "Adds support for event medals",
 	"homepage": "https://github.com/lucifer4o/anavarocom/tree/master/event_medals",
 	"version": "1.0.0",
 	"time": "2013-12-01",
-	"licence": "GPL-2.0",
+	"license": "GPL-2.0",
 	"authors": [
 		{
 			"name": "Stanislav Atanasov",
