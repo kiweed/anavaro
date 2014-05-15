@@ -111,7 +111,7 @@ class main_listener implements EventSubscriberInterface
 				);
 			}
 
-			if ($medals) {
+			if (isset($medals)) {
 				if (count($medals) == "1") {
 					$outputMedals = "<a href=\"{$this->root_path}viewtopic.{$this->php_ext}?t=".$medals[0]['link']."\">";
 					$date = date("[d F Y]", $medals[0]['date']);

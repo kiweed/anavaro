@@ -62,7 +62,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 				'ACP_EVENT_MEDALS',
 				'ACP_EVENT_MEDALS_GRP'
 			)),
-			array('module.add', array(
+			array('module.remove', array(
 				'acp',
 				'',
 				'ACP_EVENT_MEDALS'
