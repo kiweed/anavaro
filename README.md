@@ -29,6 +29,7 @@ Event Medals
 	  -TO DO: Make ACL who can add medals
 	  -TO DO: Edit image of medals
   Global TO DO:
+    Problems with hiding modules when disabled.
     Optimize and Clean code. 
     Make SQL use $db object
 	  
