@@ -14,6 +14,7 @@ Event Medals
       -show summary of user medals in profile field in postview - NOT CONFIGURABLE
     
     Profile:
+      -TO DO: Move event medals to tab in profile
       -show list user medals in profile - CONFIGURABLE (configuration is NOT IMPLEMENTED yet)
       -show form for manual adding of madels to admins - NOT IMPLEMENTED
 	  -TO DO: Quick Delete/edit of medals
