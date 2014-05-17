@@ -61,8 +61,12 @@
 						<option value="3" <!-- IF event_edit.TYPE == 3 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_THREE}</option>
 						<option value="4" <!-- IF event_edit.TYPE == 4 -->SELECTED<!-- ENDIF -->>{L_MEDAL_TYPE_FOUR}</option>
 					</select>
-					<label><input type="checkbox" name="delete[]" value="{event_edit.USER_ID}"> {L_MEDAL_DELETE}</label>
+					<label><input type="checkbox" name="delete[]" value="{event_edit.USER_ID}"> {L_MEDAL_DELETE}</label><br>
 				</dd>
+			</dl>
+			<dl>
+				<dt>{L_IMAGE_PATH} </dt>
+				<dd><input type="text" size="36" id="usesr[{event_edit.USER_ID}][image]" name="usesr[{event_edit.USER_ID}][image]" class="post" value="{event_edit.IMAGE}"></dd>
 			</dl>
 		</fieldset>
 		<!-- END event_edit -->
@@ -89,6 +93,8 @@
 					</select>
 					<label><input type="checkbox" name="delete[]" value="{user_edit.EVENT_ID}"> {L_MEDAL_DELETE}</label>
 				</dd>
+				<dt></dt>
+				<dd><input type="text" size="36" id="events[{user_edit.EVENT_ID}][image]" name="events[{user_edit.EVENT_ID}][image]" class="post" value="{user_edit.IMAGE}"></dd>
 			</dl>
 			<!-- END user_edit -->
 		</fieldset>

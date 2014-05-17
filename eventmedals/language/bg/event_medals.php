@@ -82,6 +82,15 @@ $lang = array_merge($lang, array(
 	'ERR_DATE_ERR'	=> 'Нещо си объркал в датата ...',
 	'ERR_TOPIC_ERR'	=> 'А не ... намери си темата в която е срещата!',
 	
+	'UCP_EVENT_CONTROL'	=>	'Настройка на медали',
+	'UCP_PROFILE_MEDALS_CONTROL'	=> 'Медали в профилa',
+	'UCP_PROFILE_MEDALS_EXPLAIN'	=> 'Кой може да вижда медалите в профила ви',
 	
+	'NONE'	=>	'Никой',
+	'SPECIAL_FRIENDS'	=> 'Специални приятели',
+	
+	'UCP_PROFILE_ACC_ERROR' => 'Нямате права да виждате медалите на този потребител',
+	
+	'ACL_U_EVENT_CONTROL'	=> 'Може да слага/променя медали',
 	
 ));

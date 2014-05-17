@@ -32,12 +32,12 @@ class main_info
 			'modes'		=> array(
 				'add'		=> array(
 									'title' => 'ACP_EVENT_MEDALS_ADD',
-									'auth' 		=> 'acl_a_user', 
+									'auth' 		=> 'ext_anavarocom/eventmedals && acl_a_board', 
 									'cat'		=> array('ACP_EVENT_MEDALS')
 									),
 				'edit'		=> array(
 									'title' => 'ACP_EVENT_MEDALS_EDIT', 
-									'auth' 		=> 'acl_a_user', 
+									'auth' 		=> 'ext_anavarocom/eventmedals && acl_a_board', 
 									'cat'		=> array('ACP_EVENT_MEDALS')
 									),
 			),

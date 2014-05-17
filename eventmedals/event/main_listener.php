@@ -31,7 +31,6 @@ class main_listener implements EventSubscriberInterface
 		return array(
 			'core.memberlist_prepare_profile_data'	       => 'prepare_medals',
 			'core.user_setup'		=> 'load_language_on_setup',
-			//'core.memberlist_view_profile'	      => 'fuunct_one',
 			'core.viewtopic_modify_post_row'	=>	'modify_post_row',
 		);
     }
@@ -82,10 +81,10 @@ class main_listener implements EventSubscriberInterface
 	public function prepare_medals($event)
     {
 		//$this->var_display($this->user->lang);
-		$sql = "SELECT profile_event_show FROM `phpbb_users_custom` WHERE user_id = '".$event['data']['user_id']."'";
+		$sql = 'SELECT profile_event_show FROM phpbb_users_custom WHERE user_id = '.$this->db->sql_escape($event['data']['user_id']);
 		$result = $this->db->sql_query($sql);
 		$optResult = $this->db->sql_fetchrow($result);
-		$sql = "SELECT `zebra_id`, `user_id`, `bff` FROM `phpbb_zebra` WHERE `user_id` = '".$event['data']['user_id']."' AND `zebra_id` = '".$this->user->data['user_id']."'";
+		$sql = 'SELECT zebra_id, user_id, bff FROM phpbb_zebra WHERE user_id = '.$this->db->sql_escape($event['data']['user_id']).' AND zebra_id = '.$this->user->data['user_id'];
 		$result = $this->db->sql_fetchrow($this->db->sql_query($sql));
 		$friend_state;
 		if ($result) {
@@ -99,8 +98,9 @@ class main_listener implements EventSubscriberInterface
 		else {
 			$friend_state = 1;
 		}
-		if ($event['data']['user_id'] == $this->user->data['user_id'] || $this->auth->acl_getf_global('m_approve') || $this->auth->acl_get('a_user') || ($optResult['profile_event_show'] > 0 AND $optResult['profile_event_show'] <= $friend_state)) {
-			$sql="SELECT * FROM `phpbb_event_medals` WHERE `oid` = '".$event['data']['user_id']."' ORDER BY `date`";
+
+		if ($event['data']['user_id'] == $this->user->data['user_id'] || $this->auth->acl_getf_global('m_approve') || $this->auth->acl_get('a_user') || ($optResult['profile_event_show'] > 0 AND $optResult['profile_event_show'] <= $friend_state - 1)) {
+			$sql='SELECT * FROM phpbb_event_medals WHERE oid = '.$this->db->sql_escape($event['data']['user_id']).' ORDER BY date';
 			$result=$this->db->sql_query($sql);
 			while ($row = $this->db->sql_fetchrow($result)) {
 				$medals[] = array (
@@ -130,7 +130,7 @@ class main_listener implements EventSubscriberInterface
 						}
 					}
 					else {
-						$outputMedals .= "<img src=\"" . $phpbb_root_path . "/" . $medals[0]['image'] ."\" alt=\"" . $date . "\" title=\"" . $date . "\"/>";
+						$outputMedals .= "<img src=\"" . $this->root_path . $medals[0]['image'] ."\" alt=\"" . $date . "\" title=\"" . $date . "\"/>";
 					}
 					$outputMedals .= "</a> ";
 				}
@@ -170,6 +170,12 @@ class main_listener implements EventSubscriberInterface
 				$this->template->assign_var('MEDALS', $outputMedals);
 			}
 		}
+		else
+		{	
+			$outputMedals = $this->user->lang['UCP_PROFILE_ACC_ERROR'];
+			$this->template->assign_var('MEDALS_TITLE', $this->user->lang['MEDALS_TITLE']);
+			$this->template->assign_var('MEDALS', $outputMedals);
+		}	
     }
 
 	public function modify_post_row($event)
@@ -179,7 +185,7 @@ class main_listener implements EventSubscriberInterface
         $event_medals[2]=0;
         $event_medals[3]=0;
         $event_medals[4]=0;
-        $result1 = $this->db->sql_query("SELECT `type` FROM `phpbb_event_medals` WHERE `oid` = '".$event['post_row']['POSTER_ID']."'");
+        $result1 = $this->db->sql_query('SELECT type FROM `phpbb_event_medals` WHERE `oid` = '.$this->db->sql_escape($event['post_row']['POSTER_ID']));
         while ($row1 = $this->db->sql_fetchrow($result1)) {
                 if ($row1['type'] == "1") {
                         $event_medals[1]++;
