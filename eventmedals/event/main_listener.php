@@ -103,6 +103,7 @@ class main_listener implements EventSubscriberInterface
 			$sql='SELECT * FROM phpbb_event_medals WHERE oid = '.$this->db->sql_escape($event['data']['user_id']).' ORDER BY date ASC';
 			$result=$this->db->sql_query($sql);
 			$outputMedals = '';
+			$medals = array();
 			while ($row = $this->db->sql_fetchrow($result)) {
 				$medals[$row['date']] = array (
 					'type'	=>	$row['type'],
@@ -111,7 +112,10 @@ class main_listener implements EventSubscriberInterface
 					'image' =>	$row['image'],
 				);
 			}
-			asort($medals);
+			if ($medals)
+			{
+				asort($medals);
+			}
 
 			if (isset($medals)) {
 				if (count($medals) == "1") {
