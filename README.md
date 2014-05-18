@@ -14,23 +14,22 @@ Event Medals
       -show summary of user medals in profile field in postview
     
     Profile:
-      -show list user medals in profile - CONFIGURABLE
-      -TO DO: show form for manual adding of madels to admins
+      -show list user medals in profile
+      -TO DO: show form for manual adding of madels ACL users
 	  -TO DO: Quick Delete/edit of medals
       
     UCP:
-      -show ACL for who can view the medals in profile (Allways visible for admins and user it self) - NOT IMPLEMENTED
+      -show ACL for who can view the medals in profile (Allways visible for admins and user it self)
       
     ACP:
       -form for mass addition of medals
 	  -make sure medals are unique
 	  -edit medals
-	  -TO DO: Make ACL who can add medals
-	  -TO DO: Edit image of medals
+	  -ACL who can add/edit medals
+	  -TO DO: Split Add and EDIT ACL
+	  -Edit image of medals
   Global TO DO:
-    Problems with hiding modules when disabled.
-    Optimize and Clean code. 
-    Make SQL use $db object
+    Optimize and Clean code.
 	  
 Zebra enhance
 

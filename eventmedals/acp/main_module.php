@@ -71,7 +71,7 @@ class main_module
 						foreach ($users_arry as $VAR) {
 							$sql = 'SELECT user_id, username 
 									FROM ' . USERS_TABLE . '
-									WHERE username_clean = '.$db->sql_escape(utf8_clean_string($VAR));
+									WHERE username_clean = \''.$db->sql_escape(utf8_clean_string($VAR)).'\'';
 							$result = $db->sql_query($sql);
 							$row = $db->sql_fetchrow($result);
 							//$this->var_display($row);
@@ -147,9 +147,9 @@ class main_module
 								$result = $db->sql_fetchrow($db->sql_query($sql_rq));
 								//$this->var_display($result['COUNT(*)']);
 								if ($result['COUNT(*)'] < 1) {
-									$sql = 'INSERT INTO phpbb_event_medals SET oid = '.$db->sql_escape($ID)."', type = '".$db->sql_escape($VAR['select']).', date = '.$db->sql_escape($timestamp);
+									$sql = 'INSERT INTO phpbb_event_medals SET oid = '.$db->sql_escape($ID).', type = '.$db->sql_escape($VAR['select']).', date = '.$db->sql_escape($timestamp);
 									if ($link) { $sql .= ', link = '.$db->sql_escape($link); }
-									if ($image) { $sql .= ', image = '.$db->sql_escape($image); }
+									if ($image) { $sql .= ', image = \''.$db->sql_escape($image).'\''; }
 									//$this->var_display($sql);
 									$db->sql_query($sql);
 								}

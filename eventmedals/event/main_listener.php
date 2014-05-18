@@ -100,16 +100,18 @@ class main_listener implements EventSubscriberInterface
 		}
 
 		if ($event['data']['user_id'] == $this->user->data['user_id'] || $this->auth->acl_getf_global('m_approve') || $this->auth->acl_get('a_user') || ($optResult['profile_event_show'] > 0 AND $optResult['profile_event_show'] <= $friend_state - 1)) {
-			$sql='SELECT * FROM phpbb_event_medals WHERE oid = '.$this->db->sql_escape($event['data']['user_id']).' ORDER BY date';
+			$sql='SELECT * FROM phpbb_event_medals WHERE oid = '.$this->db->sql_escape($event['data']['user_id']).' ORDER BY date ASC';
 			$result=$this->db->sql_query($sql);
+			$outputMedals = '';
 			while ($row = $this->db->sql_fetchrow($result)) {
-				$medals[] = array (
+				$medals[$row['date']] = array (
 					'type'	=>	$row['type'],
 					'link'	=>	$row['link'],
 					'date'	=>	$row['date'],
 					'image' =>	$row['image'],
 				);
 			}
+			asort($medals);
 
 			if (isset($medals)) {
 				if (count($medals) == "1") {
@@ -138,7 +140,7 @@ class main_listener implements EventSubscriberInterface
 					$outputMedals = '';
 					$count = "1";
 					foreach($medals AS $VAR) {
-						$outputMedals .= "<a href=\"{$this->root_path}viewtopic.{$this->php_ext}?t=".$medals[0]['link']."\">";
+						$outputMedals .= "<a href=\"{$this->root_path}viewtopic.{$this->php_ext}?t=".$VAR['link']."\">";
 						$date = date("[d F Y]", $VAR['date']);
 						if ($count == "") {
 							$outputMedals .= "<br>";
@@ -165,22 +167,33 @@ class main_listener implements EventSubscriberInterface
 						$outputMedals .= "</a>";
 					}
 				}
-				//var_display($outputMedals);	
-				$this->template->assign_var('MEDALS_TITLE', $this->user->lang['MEDALS_TITLE']);
-				$this->template->assign_var('MEDALS', $outputMedals);
 			}
 		}
 		else
 		{	
 			$outputMedals = $this->user->lang['UCP_PROFILE_ACC_ERROR'];
-			$this->template->assign_var('MEDALS_TITLE', $this->user->lang['MEDALS_TITLE']);
-			$this->template->assign_var('MEDALS', $outputMedals);
-		}	
+		}
+		//Let's see if user hase "u_event_control"
+		
+		if ($this->auth->acl_get('u_event_add'))
+		{
+			$this->template->assign_var('MEDALS_ADD', "1");
+			$this->template->assign_var('MEDALS_EVENT_ADD_URL', $this->root_path . 'app.php/eventmedals/add/'. $event['data']['user_id']);
+		}
+		if ($this->auth->acl_get('u_event_modify'))
+		{
+			$this->template->assign_var('MEDALS_MODIFY', "1");
+			$this->template->assign_var('MEDALS_EVENT_EDIT_URL', $this->root_path . 'app.php/eventmedals/edit/'. $event['data']['user_id']);
+		}
+		
+		$this->template->assign_var('MEDALS_TITLE', $this->user->lang['MEDALS_TITLE']);
+		$this->template->assign_var('MEDALS', $outputMedals);
     }
 
 	public function modify_post_row($event)
 	{
 		//$this->var_display($event['post_row']);
+		$medals = '';
 		$event_medals[1]=0;
         $event_medals[2]=0;
         $event_medals[3]=0;

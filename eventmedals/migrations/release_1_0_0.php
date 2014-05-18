@@ -58,11 +58,14 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 			
 			//setting permissions
 			
-			array('permission.add', array('u_event_control', true)),
+			array('permission.add', array('u_event_add', true)),
+			array('permission.add', array('u_event_modify', true)),
 			
 			// Set permissions
-			array('permission.permission_set', array('ROLE_ADMIN_FULL', 'u_event_control', true)),
-			array('permission.permission_set', array('ROLE_ADMIN_STANDARD', 'u_event_control', true)),
+			array('permission.permission_set', array('ROLE_ADMIN_FULL', 'u_event_add', true)),
+			array('permission.permission_set', array('ROLE_ADMIN_STANDARD', 'u_event_add', true)),
+			array('permission.permission_set', array('ROLE_ADMIN_FULL', 'u_event_modify', true)),
+			array('permission.permission_set', array('ROLE_ADMIN_STANDARD', 'u_event_modify', true)),
 		);
 	}
 

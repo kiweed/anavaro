@@ -82,4 +82,17 @@ $lang = array_merge($lang, array(
 	'ERR_DATE_ERR'	=> 'The date is wrong ...',
 	'ERR_TOPIC_ERR'	=> 'Nope! There is no Topic ID like the one you\'ve provided',
 	
+	'UCP_EVENT_CONTROL'	=>	'Event control',
+	'UCP_PROFILE_MEDALS_CONTROL'	=> 'Event medals in profile',
+	'UCP_PROFILE_MEDALS_EXPLAIN'	=> 'Who can see the event medals',
+	
+	'NONE'	=>	'No one',
+	'SPECIAL_FRIENDS'	=> 'Special friends',
+	
+	'UCP_PROFILE_ACC_ERROR' => 'You don\'t have access to see this user\'s event medals',
+	'UCP_PROFILE_CONTROL_ERROR'	=> 'You are not authorized to change event medals',
+	
+	'ACL_U_EVENT_ADD'	=> 'Add event medals',
+	'ACL_U_EVENT_MODIFY'	=> 'Modify event medals',
+	
 ));

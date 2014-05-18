@@ -14,3 +14,16 @@ services:
             - %core.php_ext%
         tags:
             - { name: event.listener }
+    anavarocom.eventmedals.ajaxyfy:
+        class: anavarocom\eventmedals\controller\ajaxify
+        arguments:
+            - @auth
+            - @cache
+            - @config
+            - @dbal.conn
+            - @request
+            - @template
+            - @user
+            - @controller.helper
+            - %core.root_path%
+            - %core.php_ext%
