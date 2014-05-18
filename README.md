@@ -15,8 +15,8 @@ Event Medals
     
     Profile:
       -show list user medals in profile
-      -TO DO: show form for manual adding of madels ACL users
-	  -TO DO: Quick Delete/edit of medals
+      -show form for manual adding of madels ACL users
+	  -TO DO: Return to user profile after adding a medal
       
     UCP:
       -show ACL for who can view the medals in profile (Allways visible for admins and user it self)
@@ -26,8 +26,9 @@ Event Medals
 	  -make sure medals are unique
 	  -edit medals
 	  -ACL who can add/edit medals
-	  -TO DO: Split Add and EDIT ACL
+	  -Split Add and EDIT ACL
 	  -Edit image of medals
+	  
   Global TO DO:
     Optimize and Clean code.
 	  
