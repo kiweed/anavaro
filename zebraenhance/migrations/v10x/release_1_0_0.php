@@ -25,13 +25,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 		return array(
 			
 			array('config.add', array('zebra_enhance_version', '1.0.0')),
-		);
-	}
-	public function revert_data()
-	{
-		return array(
-		
-			array('config.remove', array('zebra_enhance_version')),
+			array('config.add', array('zebra_module_id', 'none')),
 		);
 	}
 	//lets create the needed table	

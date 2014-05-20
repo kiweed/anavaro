@@ -46,7 +46,7 @@ class ucp_medals_module
 				switch ($stage) {
 					case 'update':
 						$allowLevel = $request->variable('ucp_profile_view', 0);
-						if ($allowLevel > 2)
+						if ($allowLevel > 3)
 						{
 							$allowLevel = 0;
 						}

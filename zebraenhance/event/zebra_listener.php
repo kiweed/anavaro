@@ -7,7 +7,6 @@
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
-//TODO 1: Dynamicly locate ZEBRA module
 //TODO 2: Make use of ajax requests for canceling requests
 //TODO 3: check if Zebra table is cleaned from deletion of user (make it clean if it is not.
 
@@ -153,12 +152,12 @@ class zebra_listener implements EventSubscriberInterface
 			{
 				$sql = 'DELETE FROM ' . ZEBRA_TABLE . '
 				WHERE user_id = \'' . $this->user->data['user_id'] . '\'
-				AND `zebra_id` = \''. $VAR .'\'';
+				AND zebra_id = \''. $VAR .'\'';
 				$this->db->sql_query($sql);
 				
 				$sql = 'DELETE FROM ' . ZEBRA_TABLE . '
 				WHERE user_id = \'' . $VAR . '\'
-				AND `zebra_id` = \''. $this->user->data['user_id'] .'\'';
+				AND zebra_id = \''. $this->user->data['user_id'] .'\'';
 				$this->db->sql_query($sql);
 			}
 			$event['user_ids'] = array('0');
@@ -169,9 +168,17 @@ class zebra_listener implements EventSubscriberInterface
 	public function module_display($event)
 	{
 		$ispending = $iswaiting = '';
-		//TODO 1
-		if ($event['id'] == 'ucp_zebra' OR $event['id'] == '168')
+		if ($this->config['zebra_module_id'] == 'none')
 		{
+			$sql = 'SELECT parent_id FROM ' . MODULES_TABLE . ' WHERE module_basename = \'ucp_zebra\' LIMIT 1';
+			$result = $this->db->sql_query($sql);
+			$row = $this->db->sql_fetchrow($result);
+			$this->config->set('zebra_module_id', $row['parent_id']);
+		}
+
+		if ($event['id'] == 'ucp_zebra' OR $event['id'] == $this->config['zebra_module_id'])
+		{
+			$this->template->assign_var('IS_ZEBRA', '1');
 			//let's get incoming pendings
 			$sql = "SELECT `zc`.*, `u`.`username`, `u`.`user_colour`
 					FROM `phpbb_zebra_confirm` AS `zc`
@@ -219,10 +226,16 @@ class zebra_listener implements EventSubscriberInterface
 			
 			
 			//let's populate the prity zebra list (bff and all)
-			$sql = "SELECT `zc`.*, `u`.`username`, `u`.`user_colour`
-					FROM ". ZEBRA_TABLE ." AS `zc`
-					JOIN ". USERS_TABLE ." AS `u` ON (`zc`.`zebra_id` = `u`.`user_id`)
-					WHERE `zc`.`user_id` = '".$this->user->data['user_id']."'";
+			$sql_array = array(
+				'SELECT'	=> 'zc.*, u.username, u.user_colour',
+				'FROM'	=> array(
+					ZEBRA_TABLE	=> 'zc',
+					USERS_TABLE	=> 'u',
+				),
+				'WHERE'	=> 'zc.zebra_id = u.user_id AND zc.user_id = '.$this->user->data['user_id'],
+				'ORDER_BY'	=> 'u.username ASC'
+			);
+			$sql = $this->db->sql_build_query('SELECT', $sql_array);
 			$result = $this->db->sql_query($sql);
 			while($row = $this->db->sql_fetchrow($result))
 			{
@@ -238,11 +251,12 @@ class zebra_listener implements EventSubscriberInterface
 	
 	
 	public function delete_users($event)
-	{
-		foreach ($event[user_ids] AS $VAR)
+	{	
+		foreach ($event['user_ids'] AS $VAR)
 		{
-			//TODO 3
-			$sql = "DELETE FROM `phpbb_zebra_confirm` WHERE `user_id` = '".$VAR."' OR `zebra_id` = '".$VAR."'";
+			$sql = 'DELETE FROM phpbb_zebra_confirm WHERE user_id = '.$VAR.' OR zebra_id = '.$VAR;
+			$this->db->sql_query($sql);
+			$sql = 'DELETE FROM '. ZEBRA_TABLE .' WHERE user_id = '.$VAR.' OR zebra_id = '.$VAR;
 			$this->db->sql_query($sql);
 		}
 	}
