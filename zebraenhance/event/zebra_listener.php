@@ -62,7 +62,7 @@ class zebra_listener implements EventSubscriberInterface
 	* @param string			$root_path	phpBB root path
 	* @param string			$php_ext	phpEx
 	*/
-	public function __construct(\phpbb\auth\auth $auth, \phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\db\driver\driver $db, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, \phpbb\controller\helper $helper, $root_path, $php_ext)
+	public function __construct(\phpbb\auth\auth $auth, \phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\db\driver\driver $db, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, \phpbb\controller\helper $helper, \anavarocom\zebraenhance\controller\notifyhelper $notifyhelper, $root_path, $php_ext)
 	{
 		$this->auth = $auth;
 		$this->cache = $cache;
@@ -72,6 +72,7 @@ class zebra_listener implements EventSubscriberInterface
 		$this->template = $template;
 		$this->user = $user;
 		$this->helper = $helper;
+		$this->notifyhelper = $notifyhelper;
 		$this->root_path = $root_path;
 		$this->php_ext = $php_ext;
 	}
@@ -82,6 +83,15 @@ class zebra_listener implements EventSubscriberInterface
             'lang_set' => 'zebra_enchance',
         );
         $event['lang_set_ext'] = $lang_set_ext;
+		$this->notifyhelper->test();
+		if ($this->config['zebra_module_id'] == 'none')
+		{
+			$sql = 'SELECT parent_id FROM ' . MODULES_TABLE . ' WHERE module_basename = \'ucp_zebra\' LIMIT 1';
+			$result = $this->db->sql_query($sql);
+			$row = $this->db->sql_fetchrow($result);
+			$this->config->set('zebra_module_id', $row['parent_id']);
+		}
+
 	}
 
 
@@ -115,6 +125,7 @@ class zebra_listener implements EventSubscriberInterface
 						$this->db->sql_query($sql);
 						$sql = "DELETE FROM `phpbb_zebra_confirm` WHERE `user_id` = '".$VAR['user_id']."' AND `zebra_id` = '".$VAR['zebra_id']."'";
 						$this->db->sql_query($sql);
+						$this->notifyhelper->notify('confirm', $VAR['zebra_id'], $VAR['user_id']);
 					}
 					else 
 					{
@@ -124,6 +135,7 @@ class zebra_listener implements EventSubscriberInterface
 						if (!$result) {
 							$sql = "INSERT INTO `phpbb_zebra_confirm` SET `user_id` = '".$VAR['user_id']."', `zebra_id` = '".$VAR['zebra_id']."', `friend` = '1', `foe` = '0'";
 							$this->db->sql_query($sql);
+							$this->notifyhelper->notify('add', $VAR['zebra_id'], $VAR['user_id']);
 						}
 					}
 				}
@@ -151,15 +163,19 @@ class zebra_listener implements EventSubscriberInterface
 			foreach($event['user_ids'] AS $VAR)
 			{
 				$sql = 'DELETE FROM ' . ZEBRA_TABLE . '
-				WHERE user_id = \'' . $this->user->data['user_id'] . '\'
-				AND zebra_id = \''. $VAR .'\'';
+				WHERE user_id = ' . $this->user->data['user_id'] . '
+				AND zebra_id = '. $VAR;
 				$this->db->sql_query($sql);
 				
 				$sql = 'DELETE FROM ' . ZEBRA_TABLE . '
-				WHERE user_id = \'' . $VAR . '\'
-				AND zebra_id = \''. $this->user->data['user_id'] .'\'';
+				WHERE user_id = ' . $VAR . '
+				AND zebra_id = '. $this->user->data['user_id'];
 				$this->db->sql_query($sql);
+				
+				$this->notifyhelper->clean($VAR, $this->user->data['user_id']);
 			}
+			
+			
 			$event['user_ids'] = array('0');
 		}
 	}
@@ -168,13 +184,6 @@ class zebra_listener implements EventSubscriberInterface
 	public function module_display($event)
 	{
 		$ispending = $iswaiting = '';
-		if ($this->config['zebra_module_id'] == 'none')
-		{
-			$sql = 'SELECT parent_id FROM ' . MODULES_TABLE . ' WHERE module_basename = \'ucp_zebra\' LIMIT 1';
-			$result = $this->db->sql_query($sql);
-			$row = $this->db->sql_fetchrow($result);
-			$this->config->set('zebra_module_id', $row['parent_id']);
-		}
 
 		if ($event['id'] == 'ucp_zebra' OR $event['id'] == $this->config['zebra_module_id'])
 		{
