@@ -2,6 +2,7 @@ services:
     anavarocom.zebraenhance.listener:
         class: anavarocom\zebraenhance\event\zebra_listener
         arguments:
+            - @user_loader
             - @auth
             - @cache
             - @config

@@ -45,20 +45,20 @@ Zebra enhance
   
     System:
 	  - Make sure AJAX Callback function is loaded only in UCP -> Zebra
-	  - TO DO: Add notifications for new requests.
+	  - Add notifications for new requests.
 	
 	UCP:
 	  - Show pending and awaiting confirmation requests
 	  - Show beautiful friend control (using AJAX)
 	  - Add option for selecting "Close Friends" with additional access*
 	  - Dynamically locate which is the zebra module
-	  - TO DO: Make cancel request use AJAXed "confirm_box" (there is bug with confirm submit when executed from ajax)
-	  - TO DO: See if when user is deleted zebra cleans the remains (if not - make the extension do it)
+	  - Cancel request use AJAXed "confirm_box"
+	  - See if when user is deleted zebra cleans the remains (if not - make the extension do it)
+	  - Add ACL who can view friendlist
 	  
-	ACP:
-	  - TO DO: Add ACL options
+	Profile:
+	  - Add friend list in profile
 
   Global TO DO:
     Optimize and Clean code.
-    Make SQL use $db object
 

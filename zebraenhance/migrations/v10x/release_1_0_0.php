@@ -23,7 +23,6 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 	public function update_data()
 	{
 		return array(
-			
 			array('config.add', array('zebra_enhance_version', '1.0.0')),
 			array('config.add', array('zebra_module_id', 'none')),
 		);
@@ -41,11 +40,20 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 						'foe'			=> array('UINT:1')
 					),
 					'PRIMARY_KEY'    => 'user_id, zebra_id',
-				)
+				),
+				$this->table_prefix . 'users_custom'		=> array(
+					'COLUMNS'	=> array(
+						'user_id'	=> array('UINT'),
+					),
+					'PRIMARY_KEY'    => 'user_id'
+				),
 			),
 			'add_columns'	=> array(
 				ZEBRA_TABLE 	=> array(
 					'bff'	=> array('UINT', 0),
+				),
+				$this->table_prefix . 'users_custom'        => array(
+					'profile_friend_show'    => array('UINT', 0),
 				)
 			),
 		);
@@ -60,6 +68,9 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 			'drop_columns'          => array(
 				ZEBRA_TABLE	=> array(
 					'bff',
+				),
+				$this->table_prefix . 'users_custom'        => array(
+					'profile_friend_show',
 				)
 			),
 		);

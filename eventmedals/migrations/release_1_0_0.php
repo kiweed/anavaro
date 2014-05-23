@@ -26,12 +26,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 		
 			array('module.add', array(
 				'acp',
-				'',
-				'ACP_EVENT_MEDALS'
-			)),
-			array('module.add', array(
-				'acp',
-				'ACP_EVENT_MEDALS',
+				'ACP_CAT_DOT_MODS',
 				'ACP_EVENT_MEDALS_GRP'
 			)),
 			array('module.add', array(
@@ -76,7 +71,13 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 			'add_columns'        => array(
 				$this->table_prefix . 'users_custom'        => array(
 					'profile_event_show'    => array('UINT', 0),
-				)
+				),
+				$this->table_prefix . 'users_custom'		=> array(
+					'COLUMNS'	=> array(
+						'user_id'	=> array('UINT'),
+					),
+					'PRIMARY_KEY'    => 'user_id'
+				),
 			),
 			'add_tables'    => array(
 				$this->table_prefix . 'event_medals'		=> array(

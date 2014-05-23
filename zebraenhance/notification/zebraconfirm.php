@@ -118,9 +118,9 @@ class zebraconfirm extends \phpbb\notification\type\base
 
 		$users = array();
 		$users[$data['user_id']] = array('');
-
-
-		return $users;
+		
+		$this->user_loader->load_users(array_keys($users));
+		return $this->check_user_notification_options(array_keys($users), $options);
 	}
 
 	/**
@@ -138,6 +138,8 @@ class zebraconfirm extends \phpbb\notification\type\base
 	*/
 	public function get_avatar()
 	{
+		$users = array($this->get_data('requester_id'));
+		$this->user_loader->load_users($users);
 		return $this->user_loader->get_avatar($this->get_data('requester_id'));
 	}
 	
@@ -148,8 +150,10 @@ class zebraconfirm extends \phpbb\notification\type\base
 	*/
 	public function get_title()
 	{
-		$username = $this->user_loader->get_user($this->get_data('requester_id'), 'no_profile');
-		return $this->user->lang('NOTIFICATION_ZEBRA_CONFIRM', $username['username']);
+		$users = array($this->get_data('requester_id'));
+		$this->user_loader->load_users($users);
+		$username = $this->user_loader->get_username($this->get_data('requester_id'), 'no_profile');
+		return $this->user->lang('NOTIFICATION_ZEBRA_ADD', $username);
 	}
 	
 	/**

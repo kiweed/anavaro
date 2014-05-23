@@ -38,4 +38,13 @@ $lang = array_merge($lang, array(
 	'NOTIFICATION_TYPE_ZEBRA_CONFIRM'	=>	'Сигнал за потвърждаване на приятелство',
 	'NOTIFICATION_ZEBRA_CONFIRM'	=>	'%1$s потвърди приятелството!',
 	
+	'FRINEDLIST_TITLE'	=>	'Приятели',
+	
+	'NOT_ENEMY'	=>	'Всички без врагове',
+	'SPECIAL_FRIENDS'	=>	'Специални приятели',
+	
+	'ZE_FRIENDLIST'	=>	'Листа с приятели',
+	'ZE_FRIENDLIST_EXPLAIN'	=>	'Кой може да вижда приятелите ви в профила ви?',
+	
+	'FRIENDLIST_ERROR_ACCESS'	=>	'Нямате права да виждате приятелите на този потребител',
 ));
