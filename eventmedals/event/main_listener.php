@@ -84,7 +84,7 @@ class main_listener implements EventSubscriberInterface
 		$sql = 'SELECT profile_event_show FROM phpbb_users_custom WHERE user_id = '.$this->db->sql_escape($event['data']['user_id']);
 		$result = $this->db->sql_query($sql);
 		$optResult = $this->db->sql_fetchrow($result);
-		$sql = 'SELECT zebra_id, user_id, bff FROM phpbb_zebra WHERE user_id = '.$this->db->sql_escape($event['data']['user_id']).' AND zebra_id = '.$this->user->data['user_id'];
+		$sql = 'SELECT * FROM phpbb_zebra WHERE user_id = '.$this->db->sql_escape($event['data']['user_id']).' AND zebra_id = '.$this->user->data['user_id'];
 		$result = $this->db->sql_fetchrow($this->db->sql_query($sql));
 		$friend_state;
 		if ($result) {
