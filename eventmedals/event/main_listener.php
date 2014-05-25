@@ -53,7 +53,7 @@ class main_listener implements EventSubscriberInterface
 	* @param string			$root_path	phpBB root path
 	* @param string			$php_ext	phpEx
 	*/
-	public function __construct(\phpbb\auth\auth $auth, \phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\db\driver\driver $db, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, \phpbb\controller\helper $helper, $root_path, $php_ext, $table_prefix;)
+	public function __construct(\phpbb\auth\auth $auth, \phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\db\driver\driver $db, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, \phpbb\controller\helper $helper, $root_path, $php_ext, $table_prefix)
 	{
 		$this->auth = $auth;
 		$this->cache = $cache;
@@ -82,7 +82,7 @@ class main_listener implements EventSubscriberInterface
 	public function prepare_medals($event)
     {
 		//$this->var_display($this->user->lang);
-		$sql = 'SELECT ' . $this->table_prefix . 'event_show FROM phpbb_users_custom WHERE user_id = '.$this->db->sql_escape($event['data']['user_id']);
+		$sql = 'SELECT profile_event_show FROM ' . $this->table_prefix . 'users_custom WHERE user_id = '.$this->db->sql_escape($event['data']['user_id']);
 		$result = $this->db->sql_query($sql);
 		$optResult = $this->db->sql_fetchrow($result);
 		$sql = 'SELECT * FROM ' . ZEBRA_TABLE . ' WHERE user_id = '.$this->db->sql_escape($event['data']['user_id']).' AND zebra_id = '.$this->user->data['user_id'];
@@ -119,58 +119,34 @@ class main_listener implements EventSubscriberInterface
 			}
 
 			if (isset($medals)) {
-				if (count($medals) == "1") {
-					$outputMedals = "<a href=\"{$this->root_path}viewtopic.{$this->php_ext}?t=".$medals[0]['link']."\">";
-					$date = date("[d F Y]", $medals[0]['date']);
-					if ($medals[0]['image'] == 'none') { 
-						if ($medals[0]['type'] == "1") {
+				$outputMedals = '';
+				$count = "1";
+				foreach($medals AS $VAR) {
+					$outputMedals .= "<a href=\"{$this->root_path}viewtopic.{$this->php_ext}?t=".$VAR['link']."\">";
+					$date = date("[d F Y]", $VAR['date']);
+					if ($count == "") {
+						$outputMedals .= "<br>";
+						$count = "1";
+					}
+					if ($VAR['image'] == 'none') {
+						if ($VAR['type'] == "1") {
 							$outputMedals .= '<img src="' . $this->image_dir . '/red.gif" alt="' . $this->user->lang['MEDAL_TYPE_ONE'] .$date.'" title="' . $this->user->lang['MEDAL_TYPE_ONE'] .$date.'">';
 						}
-						if ($medals[0]['type'] == "2") {
+						if ($VAR['type'] == "2") {
 							$outputMedals .= '<img src="' . $this->image_dir . '/gold.gif" alt="' . $this->user->lang['MEDAL_TYPE_TWO'] .$date.'" title="' . $this->user->lang['MEDAL_TYPE_TWO'] .$date.'">';
 						}
-						if ($medals[0]['type'] == "3") {
+						if ($VAR['type'] == "3") {
 							$outputMedals .= '<img src="' . $this->image_dir . '/blue.gif" alt="' . $this->user->lang['MEDAL_TYPE_THREE'] .$date.'" title="' . $this->user->lang['MEDAL_TYPE_THREE'] .$date.'">';
 						}
-						if ($medals[0]['type'] == "4") {
+						if ($VAR['type'] == "4") {
 							$outputMedals .= '<img src="' . $this->image_dir . '/black.gif" alt="' . $this->user->lang['MEDAL_TYPE_FOUR'] .$date.'" title="' . $this->user->lang['MEDAL_TYPE_FOUR'] .$date.'">';
-						}
+						}	
 					}
 					else {
-						$outputMedals .= "<img src=\"" . $this->root_path . $medals[0]['image'] ."\" alt=\"" . $date . "\" title=\"" . $date . "\"/>";
+						$outputMedals .= "<img src=\"" . $this->root_path . $VAR['image'] ."\" alt=\"" . $date . "\" title=\"" . $date . "\"/>";
 					}
-					$outputMedals .= "</a> ";
-				}
-				else {
-					$outputMedals = '';
-					$count = "1";
-					foreach($medals AS $VAR) {
-						$outputMedals .= "<a href=\"{$this->root_path}viewtopic.{$this->php_ext}?t=".$VAR['link']."\">";
-						$date = date("[d F Y]", $VAR['date']);
-						if ($count == "") {
-							$outputMedals .= "<br>";
-							$count = "1";
-						}
-						if ($VAR['image'] == 'none') {
-							if ($VAR['type'] == "1") {
-								$outputMedals .= '<img src="' . $this->image_dir . '/red.gif" alt="' . $this->user->lang['MEDAL_TYPE_ONE'] .$date.'" title="' . $this->user->lang['MEDAL_TYPE_ONE'] .$date.'">';
-							}
-							if ($VAR['type'] == "2") {
-								$outputMedals .= '<img src="' . $this->image_dir . '/gold.gif" alt="' . $this->user->lang['MEDAL_TYPE_TWO'] .$date.'" title="' . $this->user->lang['MEDAL_TYPE_TWO'] .$date.'">';
-							}
-							if ($VAR['type'] == "3") {
-								$outputMedals .= '<img src="' . $this->image_dir . '/blue.gif" alt="' . $this->user->lang['MEDAL_TYPE_THREE'] .$date.'" title="' . $this->user->lang['MEDAL_TYPE_THREE'] .$date.'">';
-							}
-							if ($VAR['type'] == "4") {
-								$outputMedals .= '<img src="' . $this->image_dir . '/black.gif" alt="' . $this->user->lang['MEDAL_TYPE_FOUR'] .$date.'" title="' . $this->user->lang['MEDAL_TYPE_FOUR'] .$date.'">';
-							}	
-						}
-						else {
-							$outputMedals .= "<img src=\"" . $this->root_path . $VAR['image'] ."\" alt=\"" . $date . "\" title=\"" . $date . "\"/>";
-						}
-						$count++;
-						$outputMedals .= "</a>";
-					}
+					$count++;
+					$outputMedals .= "</a>";
 				}
 			}
 		}

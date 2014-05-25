@@ -63,7 +63,7 @@ class zebra_listener implements EventSubscriberInterface
 	* @param string			$root_path	phpBB root path
 	* @param string			$php_ext	phpEx
 	*/
-	public function __construct(\phpbb\user_loader $user_loader, \phpbb\auth\auth $auth, \phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\db\driver\driver $db, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, \phpbb\controller\helper $helper, \anavarocom\zebraenhance\controller\notifyhelper $notifyhelper, $root_path, $php_ext, $table_prefix;)
+	public function __construct(\phpbb\user_loader $user_loader, \phpbb\auth\auth $auth, \phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\db\driver\driver $db, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, \phpbb\controller\helper $helper, \anavarocom\zebraenhance\controller\notifyhelper $notifyhelper, $root_path, $php_ext, $table_prefix)
 	{
 		$this->user_loader = $user_loader;
 		$this->auth = $auth;
@@ -235,7 +235,7 @@ class zebra_listener implements EventSubscriberInterface
 					$this->table_prefix . 'zebra_confirm'	=>	'zc',
 					USERS_TABLE	=> 'u',
 				),
-				'WHERE'	=> 'zc.user_id = u.user_id AND zc.user_id = '.$this->user->data['user_id']
+				'WHERE'	=> 'zc.zebra_id = u.user_id AND zc.user_id = '.$this->user->data['user_id']
 			);
 			$sql = $this->db->sql_build_query('SELECT', $sql_array);
 			$result = $this->db->sql_query($sql);
