@@ -62,3 +62,16 @@ Zebra enhance
   Global TO DO:
     Optimize and Clean code.
 
+Post Love
+  
+  Description:
+  
+	Add "like"/love (as it uses small heart) to the posts. 
+	As a popup you can see who have liked/loved the post.
+	
+  Features:
+    
+	Postview:
+	  - Show small heart under every post 
+	  - Togle like/love
+	  - Show as tooltip who have loked the post

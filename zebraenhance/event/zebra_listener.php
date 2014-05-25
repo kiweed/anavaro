@@ -117,7 +117,7 @@ class zebra_listener implements EventSubscriberInterface
 					if ($result) 
 					{
 						//so we have incoming request -> we add friends!
-						$sql = 'INSERT INTO ". ZEBRA_TABLE ." SET user_id = ' . (int) $VAR['user_id'] . ', zebra_id = ' . (int) $VAR['zebra_id'] . ', friend = 1, foe = 0';
+						$sql = 'INSERT INTO '. ZEBRA_TABLE .' SET user_id = ' . (int) $VAR['user_id'] . ', zebra_id = ' . (int) $VAR['zebra_id'] . ', friend = 1, foe = 0';
 						$this->db->sql_query($sql);
 						$sql = 'INSERT INTO '. ZEBRA_TABLE .' SET user_id = ' . (int) $VAR['zebra_id'] . ', zebra_id = ' . (int) $VAR['user_id'] . ', friend = 1, foe = 0';
 						$this->db->sql_query($sql);
