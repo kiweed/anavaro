@@ -14,6 +14,7 @@ services:
             - @anavarocom.zebraenhance.notifyhelper
             - %core.root_path%
             - %core.php_ext%
+            - %core.table_prefix%
         tags:
             - { name: event.listener }
     anavarocom.zebraenhance.ajaxyfy:
@@ -29,6 +30,7 @@ services:
             - @controller.helper
             - %core.root_path%
             - %core.php_ext%
+            - %core.table_prefix%
     anavarocom.zebraenhance.notifyhelper:
         class: anavarocom\zebraenhance\controller\notifyhelper
         arguments:
@@ -41,6 +43,7 @@ services:
             - @phpbb.boardrules.operator
             - %core.root_path%
             - %core.php_ext%
+            - %core.table_prefix%
     notification.type.zebraadd:
         class: anavarocom\zebraenhance\notification\zebraadd
         scope: prototype # scope MUST be prototype for this to work!

@@ -37,7 +37,7 @@ class ajaxify
 	* @param string			$root_path	phpBB root path
 	* @param string			$php_ext	phpEx
 	*/
-	public function __construct(\phpbb\auth\auth $auth, \phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\db\driver\driver $db, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, \phpbb\controller\helper $helper, $root_path, $php_ext)
+	public function __construct(\phpbb\auth\auth $auth, \phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\db\driver\driver $db, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, \phpbb\controller\helper $helper, $root_path, $php_ext, $table_prefix)
 	{
 		$this->auth = $auth;
 		$this->cache = $cache;
@@ -49,6 +49,7 @@ class ajaxify
 		$this->helper = $helper;
 		$this->root_path = $root_path;
 		$this->php_ext = $php_ext;
+		$this->table_prefix = $table_prefix;
 	}
 	
 	
@@ -93,11 +94,11 @@ class ajaxify
 					{
 							$timestamp = mktime("0", "0", "0", $month, $day, $year);
 							
-							$sql_rq = 'SELECT  oid, link, COUNT(*) FROM  phpbb_event_medals WHERE oid = '.$this->db->sql_escape($userid).' AND link = '.$this->db->sql_escape($link);
+							$sql_rq = 'SELECT  oid, link, COUNT(*) FROM ' . $this->table_prefix . 'event_medals WHERE oid = '.$this->db->sql_escape($userid).' AND link = '.$this->db->sql_escape($link);
 							$result = $this->db->sql_fetchrow($this->db->sql_query($sql_rq));
 							//$this->var_display($result['COUNT(*)']);
 							if ($result['COUNT(*)'] < 1) {
-								$sql = 'INSERT INTO phpbb_event_medals SET oid = '.$this->db->sql_escape($userid).', type = '.$this->db->sql_escape($type).', date = '.$this->db->sql_escape($timestamp);
+								$sql = 'INSERT INTO ' . $this->table_prefix . 'event_medals SET oid = '.$this->db->sql_escape($userid).', type = '.$this->db->sql_escape($type).', date = '.$this->db->sql_escape($timestamp);
 								if ($link) { $sql .= ', link = '.$this->db->sql_escape($link); }
 								if ($image) { $sql .= ', image = \''.$this->db->sql_escape($image).'\''; }
 								
@@ -173,7 +174,7 @@ class ajaxify
 					{
 						foreach ($events_diff as $ID => $VAR)
 						{
-							$sql = 'UPDATE phpbb_event_medals SET type = '.$this->db->sql_escape($VAR).' WHERE oid = '.$this->db->sql_escape($userid).' AND link = '.$this->db->sql_escape($ID).' LIMIT 1';
+							$sql = 'UPDATE ' . $this->table_prefix . 'event_medals SET type = '.$this->db->sql_escape($VAR).' WHERE oid = '.$this->db->sql_escape($userid).' AND link = '.$this->db->sql_escape($ID).' LIMIT 1';
 							$this->db->sql_query($sql);
 						}
 					}
@@ -181,7 +182,7 @@ class ajaxify
 					{
 						foreach ($events_image_diff as $ID => $VAR)
 						{
-							$sql = 'UPDATE phpbb_event_medals SET image = \''.$this->db->sql_escape($VAR).'\' WHERE oid = '.$this->db->sql_escape($userid).' AND link = '.$this->db->sql_escape($ID).' LIMIT 1';
+							$sql = 'UPDATE ' . $this->table_prefix . 'event_medals SET image = \''.$this->db->sql_escape($VAR).'\' WHERE oid = '.$this->db->sql_escape($userid).' AND link = '.$this->db->sql_escape($ID).' LIMIT 1';
 							$this->db->sql_query($sql);
 						}
 					}
@@ -191,7 +192,7 @@ class ajaxify
 					$sql_array = array(
 						'SELECT'	=>	'e.type as type, e.link as link, e.image as image, t.topic_title as title',
 						'FROM'	=>	array(
-							'phpbb_event_medals'	=>	'e',
+							$this->table_prefix . 'event_medals'	=>	'e',
 							TOPICS_TABLE	=> 't',
 						),
 						'WHERE'	=> 'e.link = t.topic_id AND oid = '. $userid

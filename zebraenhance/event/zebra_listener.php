@@ -63,7 +63,7 @@ class zebra_listener implements EventSubscriberInterface
 	* @param string			$root_path	phpBB root path
 	* @param string			$php_ext	phpEx
 	*/
-	public function __construct(\phpbb\user_loader $user_loader, \phpbb\auth\auth $auth, \phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\db\driver\driver $db, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, \phpbb\controller\helper $helper, \anavarocom\zebraenhance\controller\notifyhelper $notifyhelper, $root_path, $php_ext)
+	public function __construct(\phpbb\user_loader $user_loader, \phpbb\auth\auth $auth, \phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\db\driver\driver $db, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, \phpbb\controller\helper $helper, \anavarocom\zebraenhance\controller\notifyhelper $notifyhelper, $root_path, $php_ext, $table_prefix;)
 	{
 		$this->user_loader = $user_loader;
 		$this->auth = $auth;
@@ -77,6 +77,7 @@ class zebra_listener implements EventSubscriberInterface
 		$this->notifyhelper = $notifyhelper;
 		$this->root_path = $root_path;
 		$this->php_ext = $php_ext;
+		$this->table_prefix = $table_prefix;
 	}
 	public function load_language_on_setup($event){
 		$lang_set_ext = $event['lang_set_ext'];
@@ -106,12 +107,12 @@ class zebra_listener implements EventSubscriberInterface
 			foreach($event['sql_ary'] as $VAR) 
 			{
 				//let's test if we have sent request
-				$sql = 'SELECT * FROM phpbb_zebra_confirm WHERE user_id = ' . (int) $VAR['user_id'] . ' AND zebra_id = ' . (int) $VAR['zebra_id'];
+				$sql = 'SELECT * FROM ' . $this->table_prefix . 'zebra_confirm WHERE user_id = ' . (int) $VAR['user_id'] . ' AND zebra_id = ' . (int) $VAR['zebra_id'];
 				$result = $this->db->sql_fetchrow($this->db->sql_query($sql));
 				if (!$result)
 				{
 					//Let's test if request is pending from the other user
-					$sql = 'SELECT * FROM phpbb_zebra_confirm WHERE user_id = ' . (int) $VAR['zebra_id'] . ' AND zebra_id = ' . (int) $VAR['user_id'];
+					$sql = 'SELECT * FROM ' . $this->table_prefix . 'zebra_confirm WHERE user_id = ' . (int) $VAR['zebra_id'] . ' AND zebra_id = ' . (int) $VAR['user_id'];
 					$result = $this->db->sql_fetchrow($this->db->sql_query($sql));
 					//$this->var_display($result);
 					if ($result) 
@@ -123,9 +124,9 @@ class zebra_listener implements EventSubscriberInterface
 						$this->db->sql_query($sql);
 						
 						//let's clean the request table 
-						$sql = 'DELETE FROM phpbb_zebra_confirm WHERE user_id = ' . (int) $VAR['zebra_id'] . ' AND zebra_id = ' . (int) $VAR['user_id'];
+						$sql = 'DELETE FROM ' . $this->table_prefix . 'zebra_confirm WHERE user_id = ' . (int) $VAR['zebra_id'] . ' AND zebra_id = ' . (int) $VAR['user_id'];
 						$this->db->sql_query($sql);
-						$sql = 'DELETE FROM phpbb_zebra_confirm WHERE user_id = ' . (int) $VAR['user_id'] . ' AND zebra_id = ' . (int) $VAR['zebra_id'];
+						$sql = 'DELETE FROM ' . $this->table_prefix . 'zebra_confirm WHERE user_id = ' . (int) $VAR['user_id'] . ' AND zebra_id = ' . (int) $VAR['zebra_id'];
 						$this->db->sql_query($sql);
 						$this->notifyhelper->notify('confirm', $VAR['zebra_id'], $VAR['user_id']);
 					}
@@ -135,7 +136,7 @@ class zebra_listener implements EventSubscriberInterface
 						$sql = 'SELECT * FROM '. ZEBRA_TABLE .' WHERE user_id = ' . (int) $VAR['zebra_id'] . ' AND zebra_id = ' . (int) $VAR['user_id']. ' AND foe = 1';
 						$result = $this->db->sql_fetchrow($this->db->sql_query($sql));
 						if (!$result) {
-							$sql = 'INSERT INTO phpbb_zebra_confirm SET user_id = ' . (int) $VAR['user_id'] . ', zebra_id = ' . (int) $VAR['zebra_id'] . ', friend = 1, foe = 0';
+							$sql = 'INSERT INTO ' . $this->table_prefix . 'zebra_confirm SET user_id = ' . (int) $VAR['user_id'] . ', zebra_id = ' . (int) $VAR['zebra_id'] . ', friend = 1, foe = 0';
 							$this->db->sql_query($sql);
 							$this->notifyhelper->notify('add', $VAR['zebra_id'], $VAR['user_id']);
 						}
@@ -149,9 +150,9 @@ class zebra_listener implements EventSubscriberInterface
 			foreach($event['sql_ary'] as $VAR) 
 			{
 				//if we add user as foe we have to remove pending requests.
-				$sql = 'DELETE FROM phpbb_zebra_confirm WHERE user_id = ' . (int) $VAR['zebra_id']. ' AND zebra_id = ' . (int) $VAR['user_id'];
+				$sql = 'DELETE FROM ' . $this->table_prefix . 'zebra_confirm WHERE user_id = ' . (int) $VAR['zebra_id']. ' AND zebra_id = ' . (int) $VAR['user_id'];
 				$this->db->sql_query($sql);
-				$sql = 'DELETE FROM phpbb_zebra_confirm WHERE user_id = ' . (int) $VAR['user_id'] . ' AND zebra_id = ' . (int) $VAR['zebra_id'];
+				$sql = 'DELETE FROM ' . $this->table_prefix . 'zebra_confirm WHERE user_id = ' . (int) $VAR['user_id'] . ' AND zebra_id = ' . (int) $VAR['zebra_id'];
 				$this->db->sql_query($sql);
 			}
 		}
@@ -174,12 +175,12 @@ class zebra_listener implements EventSubscriberInterface
 				AND zebra_id = '. $this->user->data['user_id'];
 				$this->db->sql_query($sql);
 				
-				$sql = 'DELETE FROM phpbb_zebra_confirm
+				$sql = 'DELETE FROM ' . $this->table_prefix . 'zebra_confirm
 				WHERE user_id = ' . $this->user->data['user_id'] . '
 				AND zebra_id = '. $VAR;
 				$this->db->sql_query($sql);
 				
-				$sql = 'DELETE FROM phpbb_zebra_confirm
+				$sql = 'DELETE FROM ' . $this->table_prefix . 'zebra_confirm
 				WHERE user_id = ' . $VAR . '
 				AND zebra_id = '. $this->user->data['user_id'];
 				$this->db->sql_query($sql);
@@ -198,14 +199,14 @@ class zebra_listener implements EventSubscriberInterface
 		if ($event['id'] == 'ucp_zebra' OR $event['id'] == $this->config['zebra_module_id'])
 		{
 			$this->template->assign_var('IS_ZEBRA', '1');
-			$sql = 'SELECT profile_friend_show FROM phpbb_users_custom WHERE user_id = '. $this->user->data['user_id'];
+			$sql = 'SELECT profile_friend_show FROM ' . $this->table_prefix . 'users_custom WHERE user_id = '. $this->user->data['user_id'];
 			$result = $this->db->sql_fetchrow($this->db->sql_query($sql));
 			$this->template->assign_var('ZEBRA_ACL', $result['profile_friend_show']);
 			//let's get incoming pendings
 			$sql_array = array(
 				'SELECT'	=> 'zc.*, u.username, u.user_colour',
 				'FROM'		=> array(
-					'phpbb_zebra_confirm'	=>	'zc',
+					$this->table_prefix . 'zebra_confirm'	=>	'zc',
 					USERS_TABLE	=> 'u',
 				),
 				'WHERE'	=> 'zc.user_id = u.user_id AND zc.zebra_id = '.$this->user->data['user_id']
@@ -231,7 +232,7 @@ class zebra_listener implements EventSubscriberInterface
 			$sql_array = array(
 				'SELECT'	=> 'zc.*, u.username, u.user_colour',
 				'FROM'		=> array(
-					'phpbb_zebra_confirm'	=>	'zc',
+					$this->table_prefix . 'zebra_confirm'	=>	'zc',
 					USERS_TABLE	=> 'u',
 				),
 				'WHERE'	=> 'zc.user_id = u.user_id AND zc.user_id = '.$this->user->data['user_id']
@@ -282,7 +283,7 @@ class zebra_listener implements EventSubscriberInterface
 	{	
 		foreach ($event['user_ids'] AS $VAR)
 		{
-			$sql = 'DELETE FROM phpbb_zebra_confirm WHERE user_id = '.$VAR.' OR zebra_id = '.$VAR;
+			$sql = 'DELETE FROM ' . $this->table_prefix . 'zebra_confirm WHERE user_id = '.$VAR.' OR zebra_id = '.$VAR;
 			$this->db->sql_query($sql);
 			$sql = 'DELETE FROM '. ZEBRA_TABLE .' WHERE user_id = '.$VAR.' OR zebra_id = '.$VAR;
 			$this->db->sql_query($sql);
@@ -291,10 +292,10 @@ class zebra_listener implements EventSubscriberInterface
 	
 	public function prepare_friends($event)
 	{
-		$sql = 'SELECT profile_friend_show FROM phpbb_users_custom WHERE user_id = '.$this->db->sql_escape($event['data']['user_id']);
+		$sql = 'SELECT profile_friend_show FROM ' . $this->table_prefix . 'users_custom WHERE user_id = '.$this->db->sql_escape($event['data']['user_id']);
 		$result = $this->db->sql_query($sql);
 		$optResult = $this->db->sql_fetchrow($result);
-		$sql = 'SELECT * FROM phpbb_zebra WHERE user_id = '.$this->db->sql_escape($event['data']['user_id']).' AND zebra_id = '.$this->user->data['user_id'];
+		$sql = 'SELECT * FROM ' . ZEBRA_TABLE . ' WHERE user_id = '.$this->db->sql_escape($event['data']['user_id']).' AND zebra_id = '.$this->user->data['user_id'];
 		$result = $this->db->sql_fetchrow($this->db->sql_query($sql));
 		$zebra_state = 0;
 		if ($result)

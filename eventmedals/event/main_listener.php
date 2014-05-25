@@ -53,7 +53,7 @@ class main_listener implements EventSubscriberInterface
 	* @param string			$root_path	phpBB root path
 	* @param string			$php_ext	phpEx
 	*/
-	public function __construct(\phpbb\auth\auth $auth, \phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\db\driver\driver $db, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, \phpbb\controller\helper $helper, $root_path, $php_ext)
+	public function __construct(\phpbb\auth\auth $auth, \phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\db\driver\driver $db, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, \phpbb\controller\helper $helper, $root_path, $php_ext, $table_prefix;)
 	{
 		$this->auth = $auth;
 		$this->cache = $cache;
@@ -65,6 +65,7 @@ class main_listener implements EventSubscriberInterface
 		$this->helper = $helper;
 		$this->root_path = $root_path;
 		$this->php_ext = $php_ext;
+		$this->table_prefix = $table_prefix;
 	}
 	
 	public function load_language_on_setup($event){
@@ -81,10 +82,10 @@ class main_listener implements EventSubscriberInterface
 	public function prepare_medals($event)
     {
 		//$this->var_display($this->user->lang);
-		$sql = 'SELECT profile_event_show FROM phpbb_users_custom WHERE user_id = '.$this->db->sql_escape($event['data']['user_id']);
+		$sql = 'SELECT ' . $this->table_prefix . 'event_show FROM phpbb_users_custom WHERE user_id = '.$this->db->sql_escape($event['data']['user_id']);
 		$result = $this->db->sql_query($sql);
 		$optResult = $this->db->sql_fetchrow($result);
-		$sql = 'SELECT * FROM phpbb_zebra WHERE user_id = '.$this->db->sql_escape($event['data']['user_id']).' AND zebra_id = '.$this->user->data['user_id'];
+		$sql = 'SELECT * FROM ' . ZEBRA_TABLE . ' WHERE user_id = '.$this->db->sql_escape($event['data']['user_id']).' AND zebra_id = '.$this->user->data['user_id'];
 		$result = $this->db->sql_fetchrow($this->db->sql_query($sql));
 		$friend_state;
 		if ($result) {
@@ -100,7 +101,7 @@ class main_listener implements EventSubscriberInterface
 		}
 
 		if ($event['data']['user_id'] == $this->user->data['user_id'] || $this->auth->acl_getf_global('m_approve') || $this->auth->acl_get('a_user') || ($optResult['profile_event_show'] > 0 AND $optResult['profile_event_show'] <= $friend_state)) {
-			$sql='SELECT * FROM phpbb_event_medals WHERE oid = '.$this->db->sql_escape($event['data']['user_id']).' ORDER BY date ASC';
+			$sql='SELECT * FROM ' . $this->table_prefix . 'event_medals WHERE oid = '.$this->db->sql_escape($event['data']['user_id']).' ORDER BY date ASC';
 			$result=$this->db->sql_query($sql);
 			$outputMedals = '';
 			$medals = array();
@@ -202,7 +203,7 @@ class main_listener implements EventSubscriberInterface
         $event_medals[2]=0;
         $event_medals[3]=0;
         $event_medals[4]=0;
-        $result1 = $this->db->sql_query('SELECT type FROM `phpbb_event_medals` WHERE `oid` = '.$this->db->sql_escape($event['post_row']['POSTER_ID']));
+        $result1 = $this->db->sql_query('SELECT type FROM ' . $this->table_prefix . 'event_medals WHERE oid = '.$this->db->sql_escape($event['post_row']['POSTER_ID']));
         while ($row1 = $this->db->sql_fetchrow($result1)) {
                 if ($row1['type'] == "1") {
                         $event_medals[1]++;

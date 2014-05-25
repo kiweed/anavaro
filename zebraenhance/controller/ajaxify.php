@@ -37,7 +37,7 @@ class ajaxify
 	* @param string			$root_path	phpBB root path
 	* @param string			$php_ext	phpEx
 	*/
-	public function __construct(\phpbb\auth\auth $auth, \phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\db\driver\driver $db, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, \phpbb\controller\helper $helper, $root_path, $php_ext)
+	public function __construct(\phpbb\auth\auth $auth, \phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\db\driver\driver $db, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, \phpbb\controller\helper $helper, $root_path, $php_ext, $table_prefix)
 	{
 		$this->auth = $auth;
 		$this->cache = $cache;
@@ -49,6 +49,7 @@ class ajaxify
 		$this->helper = $helper;
 		$this->root_path = $root_path;
 		$this->php_ext = $php_ext;
+		$this->table_prefix = $table_prefix;
 	}
 	
 	
@@ -70,9 +71,9 @@ class ajaxify
 					//$this->var_display($userid);
 					//let me delete all requests between you and user id.
 					
-					$sql = "DELETE FROM `phpbb_zebra_confirm` WHERE `user_id` = '".$userid."' AND `zebra_id` = '".$this->user->data['user_id']."'";
+					$sql = 'DELETE FROM ' . $this->table_prefix . 'zebra_confirm WHERE user_id = ' . $userid . ' AND zebra_id = ' . $this->user->data['user_id'];
 					$this->db->sql_query($sql);
-					$sql = "DELETE FROM `phpbb_zebra_confirm` WHERE `user_id` = '".$this->user->data['user_id']."' AND `zebra_id` = '".$userid."'";
+					$sql = 'DELETE FROM ' . $this->table_prefix . 'zebra_confirm WHERE user_id = ' . $this->user->data['user_id'] . ' AND zebra_id = ' . $userid;
 					$this->db->sql_query($sql);
 					$message = '';
 					if ($this->request->is_ajax())
@@ -100,19 +101,19 @@ class ajaxify
 				}
 			break;
 			case 'togle_bff':
-				$sql="SELECT `bff` FROM ". ZEBRA_TABLE ." WHERE `zebra_id` = '".$userid."' AND `user_id` = '".$this->user->data['user_id']."'";
+				$sql='SELECT bff FROM ' . ZEBRA_TABLE . ' WHERE zebra_id = ' .$userid. ' AND user_id = ' .$this->user->data['user_id'];
 				$result = $this->db->sql_fetchrow($this->db->sql_query($sql));
 				if ($result)
 				{
 					if($result['bff'] == '0')
 					{
-						$sql = "UPDATE " . ZEBRA_TABLE . " SET `bff` = '1' WHERE `zebra_id` = '".$userid."' AND `user_id` = '".$this->user->data['user_id']."'";
+						$sql = 'UPDATE ' . ZEBRA_TABLE . ' SET bff = 1 WHERE zebra_id = ' . $userid. ' AND user_id = ' .$this->user->data['user_id'];
 						$this->db->sql_query($sql);
 						$exit = 'add';
 					}
 					if($result['bff'] == '1')
 					{
-						$sql = "UPDATE " . ZEBRA_TABLE . " SET `bff` = '0' WHERE `zebra_id` = '".$userid."' AND `user_id` = '".$this->user->data['user_id']."'";
+						$sql = 'UPDATE ' . ZEBRA_TABLE . ' SET bff = 0 WHERE zebra_id = ' .$userid. ' AND user_id = ' .$this->user->data['user_id'];
 						$this->db->sql_query($sql);
 						$exit = 'rem';
 					}
@@ -138,7 +139,7 @@ class ajaxify
 				{
 					$userid = 0;
 				}
-				$sql = 'UPDATE phpbb_users_custom SET profile_friend_show = ' . $userid . ' WHERE user_id = '.$this->user->data['user_id'];
+				$sql = 'UPDATE ' . $this->table_prefix . 'users_custom SET profile_friend_show = ' . $userid . ' WHERE user_id = '.$this->user->data['user_id'];
 				$this->db->sql_query($sql);
 				$json_response = new \phpbb\json_response;
 					$json_response->send(array(

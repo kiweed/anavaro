@@ -12,6 +12,7 @@ services:
             - @controller.helper
             - %core.root_path%
             - %core.php_ext%
+            - %core.table_prefix%
         tags:
             - { name: event.listener }
     anavarocom.eventmedals.ajaxyfy:
@@ -27,3 +28,4 @@ services:
             - @controller.helper
             - %core.root_path%
             - %core.php_ext%
+            - %core.table_prefix%
