@@ -68,17 +68,6 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 	public function update_schema()
 	{
 		return array(
-			'add_columns'        => array(
-				$this->table_prefix . 'users_custom'        => array(
-					'profile_event_show'    => array('UINT', 0),
-				),
-				$this->table_prefix . 'users_custom'		=> array(
-					'COLUMNS'	=> array(
-						'user_id'	=> array('UINT'),
-					),
-					'PRIMARY_KEY'    => 'user_id'
-				),
-			),
 			'add_tables'    => array(
 				$this->table_prefix . 'event_medals'		=> array(
 					'COLUMNS'		=> array(
@@ -89,7 +78,18 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 						'image'		=> array('VCHAR:128', 'none')
 					),
 					'PRIMARY_KEY'    => 'oid, link',
-				)
+				),
+				$this->table_prefix . 'users_custom'		=> array(
+					'COLUMNS'	=> array(
+						'user_id'	=> array('UINT'),
+					),
+					'PRIMARY_KEY'    => 'user_id'
+				),
+			),
+			'add_columns'        => array(
+				$this->table_prefix . 'users_custom'        => array(
+					'profile_event_show'    => array('UINT', 0),
+				),
 			),
 		);
 	}
