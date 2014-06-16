@@ -4,7 +4,7 @@
 // however you can override the default methods and add custom
 // installation logic
 
-namespace anavarocom\zebraenhance;
+namespace anavaro\zebraenhance;
 
 /**
 * Extension class for custom enable/disable/purge actions

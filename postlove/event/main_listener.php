@@ -8,7 +8,7 @@
 *
 */
 
-namespace anavarocom\postlove\event;
+namespace anavaro\postlove\event;
 
 /**
 * @ignore
@@ -70,14 +70,14 @@ class main_listener implements EventSubscriberInterface
 	public function load_language_on_setup($event){
 		$lang_set_ext = $event['lang_set_ext'];
 		$lang_set_ext[] = array(
-            'ext_name' => 'anavarocom/postlove',
+            'ext_name' => 'anavaro/postlove',
             'lang_set' => 'postlove',
         );
         $event['lang_set_ext'] = $lang_set_ext;
 	}
 	
 	
-	protected $image_dir = 'ext/anavarocom/postlove/images';
+	protected $image_dir = 'ext/anavaro/postlove/images';
 
 	public function modify_post_row($event)
 	{

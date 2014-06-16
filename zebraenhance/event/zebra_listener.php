@@ -10,7 +10,7 @@
 //TODO 2: Make use of ajax requests for canceling requests
 //TODO 3: check if Zebra table is cleaned from deletion of user (make it clean if it is not.
 
-namespace anavarocom\zebraenhance\event;
+namespace anavaro\zebraenhance\event;
 
 /**
 * @ignore
@@ -63,7 +63,7 @@ class zebra_listener implements EventSubscriberInterface
 	* @param string			$root_path	phpBB root path
 	* @param string			$php_ext	phpEx
 	*/
-	public function __construct(\phpbb\user_loader $user_loader, \phpbb\auth\auth $auth, \phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\db\driver\driver $db, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, \phpbb\controller\helper $helper, \anavarocom\zebraenhance\controller\notifyhelper $notifyhelper, $root_path, $php_ext, $table_prefix)
+	public function __construct(\phpbb\user_loader $user_loader, \phpbb\auth\auth $auth, \phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\db\driver\driver $db, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, \phpbb\controller\helper $helper, \anavaro\zebraenhance\controller\notifyhelper $notifyhelper, $root_path, $php_ext, $table_prefix)
 	{
 		$this->user_loader = $user_loader;
 		$this->auth = $auth;
@@ -82,7 +82,7 @@ class zebra_listener implements EventSubscriberInterface
 	public function load_language_on_setup($event){
 		$lang_set_ext = $event['lang_set_ext'];
 		$lang_set_ext[] = array(
-            'ext_name' => 'anavarocom/zebraenhance',
+            'ext_name' => 'anavaro/zebraenhance',
             'lang_set' => 'zebra_enchance',
         );
         $event['lang_set_ext'] = $lang_set_ext;
@@ -98,7 +98,7 @@ class zebra_listener implements EventSubscriberInterface
 	}
 
 
-	protected $image_dir = 'ext/anavarocom/zebraenhance/images';
+	protected $image_dir = 'ext/anavaro/zebraenhance/images';
 	
 	public function zebra_confirm_add($event)
 	{

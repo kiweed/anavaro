@@ -1,8 +1,8 @@
 {
-	"name": "anavarocom/eventmedals",
+	"name": "anavaro/eventmedals",
 	"type": "phpbb-extension",
 	"description": "Adds support for event medals",
-	"homepage": "https://github.com/lucifer4o/anavarocom/tree/master/eventmedals",
+	"homepage": "https://github.com/lucifer4o/anavaro/tree/master/eventmedals",
 	"version": "1.0.0",
 	"time": "2014-05-23",
 	"license": "GPL-2.0",

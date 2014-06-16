@@ -1,6 +1,6 @@
 services:
-    anavarocom.zebraenhance.listener:
-        class: anavarocom\zebraenhance\event\zebra_listener
+    anavaro.zebraenhance.listener:
+        class: anavaro\zebraenhance\event\zebra_listener
         arguments:
             - @user_loader
             - @auth
@@ -11,14 +11,14 @@ services:
             - @template
             - @user
             - @controller.helper
-            - @anavarocom.zebraenhance.notifyhelper
+            - @anavaro.zebraenhance.notifyhelper
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
         tags:
             - { name: event.listener }
-    anavarocom.zebraenhance.ajaxyfy:
-        class: anavarocom\zebraenhance\controller\ajaxify
+    anavaro.zebraenhance.ajaxyfy:
+        class: anavaro\zebraenhance\controller\ajaxify
         arguments:
             - @auth
             - @cache
@@ -31,8 +31,8 @@ services:
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
-    anavarocom.zebraenhance.notifyhelper:
-        class: anavarocom\zebraenhance\controller\notifyhelper
+    anavaro.zebraenhance.notifyhelper:
+        class: anavaro\zebraenhance\controller\notifyhelper
         arguments:
             - @config
             - @dbal.conn
@@ -44,7 +44,7 @@ services:
             - %core.php_ext%
             - %core.table_prefix%
     notification.type.zebraadd:
-        class: anavarocom\zebraenhance\notification\zebraadd
+        class: anavaro\zebraenhance\notification\zebraadd
         scope: prototype # scope MUST be prototype for this to work!
         arguments:
             - @user_loader
@@ -63,7 +63,7 @@ services:
             - { name: notification.type }
     
     notification.type.zebraconfirm:
-        class: anavarocom\zebraenhance\notification\zebraconfirm
+        class: anavaro\zebraenhance\notification\zebraconfirm
         scope: prototype # scope MUST be prototype for this to work!
         arguments:
             - @user_loader

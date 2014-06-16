@@ -7,7 +7,7 @@
 *
 */
 
-namespace anavarocom\eventmedals\controller;
+namespace anavaro\eventmedals\controller;
 
 /**
 * @ignore
@@ -55,7 +55,7 @@ class ajaxify
 	
 	public function base ($action, $userid)
 	{
-		$this->user->add_lang_ext('anavarocom/eventmedals', 'event_medals');
+		$this->user->add_lang_ext('anavaro/eventmedals', 'event_medals');
 		$confirm = $this->request->variable('confirm', '');
 		$sql = 'SELECT username FROM ' . USERS_TABLE . ' WHERE user_id = ' . $userid;
 		$result = $this->db->sql_query($sql);

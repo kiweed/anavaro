@@ -12,7 +12,7 @@
 * @ignore
 */
 
-namespace anavarocom\eventmedals\acp;
+namespace anavaro\eventmedals\acp;
 
 if (!defined('IN_PHPBB'))
 {
@@ -26,18 +26,18 @@ class main_info
 	function module()
 	{
 		return array(
-			'filename'	=> '\anavarocom\eventmedals\acp\main_module',
+			'filename'	=> '\anavaro\eventmedals\acp\main_module',
 			'title'		=> 'Медали от събития',
 			'version'	=> '0.0.9',
 			'modes'		=> array(
 				'add'		=> array(
 									'title' => 'ACP_EVENT_MEDALS_ADD',
-									'auth' 		=> 'ext_anavarocom/eventmedals && acl_a_board', 
+									'auth' 		=> 'ext_anavaro/eventmedals && acl_a_board', 
 									'cat'		=> array('ACP_EVENT_MEDALS')
 									),
 				'edit'		=> array(
 									'title' => 'ACP_EVENT_MEDALS_EDIT', 
-									'auth' 		=> 'ext_anavarocom/eventmedals && acl_a_board', 
+									'auth' 		=> 'ext_anavaro/eventmedals && acl_a_board', 
 									'cat'		=> array('ACP_EVENT_MEDALS')
 									),
 			),

@@ -7,7 +7,7 @@
 *
 */
 
-namespace anavarocom\zebraenhance\controller;
+namespace anavaro\zebraenhance\controller;
 
 use Symfony\Component\DependencyInjection\Container;
 

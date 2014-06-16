@@ -11,7 +11,7 @@
 /**
 * @ignore
 */
-namespace anavarocom\eventmedals\ucp;
+namespace anavaro\eventmedals\ucp;
 
 if (!defined('IN_PHPBB'))
 {
@@ -38,7 +38,7 @@ class ucp_medals_module
 		//Lets get some groups!
 		switch ($mode) {
 			case 'control':
-				$user->add_lang_ext('anavarocom/eventmedals', 'event_medals');
+				$user->add_lang_ext('anavaro/eventmedals', 'event_medals');
 				$this->tpl_name		= 'ucp_event_medals_control';
 				
 				$stage = $request->variable('stage', 'first');

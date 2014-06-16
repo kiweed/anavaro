@@ -1,6 +1,6 @@
 services:
-    anavarocom.postlove.listener:
-        class: anavarocom\postlove\event\main_listener
+    anavaro.postlove.listener:
+        class: anavaro\postlove\event\main_listener
         arguments:
             - @auth
             - @cache
@@ -15,8 +15,8 @@ services:
             - %core.table_prefix%
         tags:
             - { name: event.listener }
-    anavarocom.postlove.ajaxyfy:
-        class: anavarocom\postlove\controller\ajaxify
+    anavaro.postlove.ajaxyfy:
+        class: anavaro\postlove\controller\ajaxify
         arguments:
             - @auth
             - @cache

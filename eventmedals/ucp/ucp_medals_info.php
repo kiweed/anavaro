@@ -12,7 +12,7 @@
 * @ignore
 */
 
-namespace anavarocom\eventmedals\ucp;
+namespace anavaro\eventmedals\ucp;
 
 if (!defined('IN_PHPBB'))
 {
@@ -26,13 +26,13 @@ class ucp_medals_info
     function module()
     {
         return array(
-            'filename' => '\anavarocom\eventmedals\ucp\ucp_medals_module',
+            'filename' => '\anavaro\eventmedals\ucp\ucp_medals_module',
             'title' => 'MEDALS_TITLE',
             'version' => '1.0.0',
             'modes' => array(
                 'control' => array(
 					'title' => 'UCP_EVENT_CONTROL', 
-					'auth' => 'ext_anavarocom/eventmedals', 
+					'auth' => 'ext_anavaro/eventmedals', 
 					'cat' => array('UCP_PROFILE')
 				),
             ),

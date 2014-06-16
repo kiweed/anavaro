@@ -7,7 +7,7 @@
 *
 */
 
-namespace anavarocom\postlove\controller;
+namespace anavaro\postlove\controller;
 
 /**
 * @ignore
@@ -55,7 +55,7 @@ class ajaxify
 	
 	public function base ($action, $post)
 	{
-		$this->user->add_lang_ext('anavarocom/postlove', 'postlove');
+		$this->user->add_lang_ext('anavaro/postlove', 'postlove');
 
 		switch ($action)
 		{

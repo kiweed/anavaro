@@ -7,7 +7,7 @@
 *
 */
 
-namespace anavarocom\zebraenhance\migrations\v10x;
+namespace anavaro\zebraenhance\migrations\v10x;
 
 class release_1_0_0 extends \phpbb\db\migration\migration
 {

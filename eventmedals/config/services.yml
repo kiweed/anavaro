@@ -1,6 +1,6 @@
 services:
-    anavarocom.eventmedals.listener:
-        class: anavarocom\eventmedals\event\main_listener
+    anavaro.eventmedals.listener:
+        class: anavaro\eventmedals\event\main_listener
         arguments:
             - @auth
             - @cache
@@ -15,8 +15,8 @@ services:
             - %core.table_prefix%
         tags:
             - { name: event.listener }
-    anavarocom.eventmedals.ajaxyfy:
-        class: anavarocom\eventmedals\controller\ajaxify
+    anavaro.eventmedals.ajaxyfy:
+        class: anavaro\eventmedals\controller\ajaxify
         arguments:
             - @auth
             - @cache

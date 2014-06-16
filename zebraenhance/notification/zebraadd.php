@@ -7,7 +7,7 @@
 *
 */
 
-namespace anavarocom\zebraenhance\notification;
+namespace anavaro\zebraenhance\notification;
 
 /**
 * Board Rules notifications class

@@ -8,7 +8,7 @@
 *
 */
 
-namespace anavarocom\eventmedals\event;
+namespace anavaro\eventmedals\event;
 
 /**
 * @ignore
@@ -71,14 +71,14 @@ class main_listener implements EventSubscriberInterface
 	public function load_language_on_setup($event){
 		$lang_set_ext = $event['lang_set_ext'];
 		$lang_set_ext[] = array(
-            'ext_name' => 'anavarocom/eventmedals',
+            'ext_name' => 'anavaro/eventmedals',
             'lang_set' => 'event_medals',
         );
         $event['lang_set_ext'] = $lang_set_ext;
 	}
 	
 	
-	protected $image_dir = 'ext/anavarocom/eventmedals/images';
+	protected $image_dir = 'ext/anavaro/eventmedals/images';
 	public function prepare_medals($event)
     {
 		//$this->var_display($this->user->lang);

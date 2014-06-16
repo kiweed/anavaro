@@ -1,5 +1,5 @@
 eventmedals_control:
     path: /postlove/{action}/{post}
-    defaults: { _controller: anavarocom.postlove.ajaxyfy:base }
+    defaults: { _controller: anavaro.postlove.ajaxyfy:base }
     requirements:
         post: \d+
